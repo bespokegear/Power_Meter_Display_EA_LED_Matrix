@@ -124,7 +124,7 @@ String outputString;    // This is the holder for the data as a string. Start as
 // Variables for the serial data read
 char inByte;         // incoming serial char
 String str_buffer = "";  // This is the holder for the string which we will display
-#define MAX_STRING 20      // Sets the maximum length of string probably could be lower
+#define MAX_STRING 25     // Sets the maximum length of string probably could be lower
 char stringBuffer[MAX_STRING];  // A buffer to hold the string when pulled from program memory
 
 // Varibales for writing to EEPROM
@@ -356,7 +356,7 @@ void loop()
 
   }
 
-  delay(20);   // Short pause to stop everything running too quick
+  delay(5);   // Short pause to stop everything running too quick
 }
 
 
@@ -385,7 +385,7 @@ void getData()
     if (inByte == 'a') // If we see an 'a' then read in the next 11 chars into a buffer.
     {
       str_buffer += inByte;
-      for (int i = 0; i < 11; i++) // Read in the next 11 chars - this is the data
+      for (int i = 0; i < 16; i++) // Read in the next 11 chars - this is the data
       {
         inByte = Serial.read();
         str_buffer += inByte;
@@ -635,13 +635,31 @@ void sortData()
     }
   }
 
-//  Clear
+  //  Clear
   //  “aXXWN?------“
-  //  Thsi clears the display
+  //  This clears the display
   else if (str_buffer.substring(3, 5) == "CL")
   {
     mySerial.print(clearLED);
     delay(2);
+    mySerial.print(paint);     
+  }
+
+  //  String
+  //  “aXXST------------“
+  //  This daw a string on the display
+  else if (str_buffer.substring(3, 5) == "ST")
+  {
+    mySerial.print(clearLED);
+    delay(2);
+    // Set the font size
+    mySerial.print("font 2\r");
+    timeValueStr = str_buffer.substring(5, 17);    
+    mySerial.print("text 3 0 16 ");
+    mySerial.print('"');
+    mySerial.print(timeValueStr);
+    mySerial.print('"');
+    mySerial.print("\r");
     mySerial.print(paint);     
   }
 
