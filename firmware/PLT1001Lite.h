@@ -20,13 +20,14 @@ public:
     void begin(long baud=115200);
     void update();
 
-    // aXXP????-
+    // * means legacy - must support
+    // aXXP????-  *
     void power(int16_t tenthWatt, bool paint=true);
-    // aXXMGP????--
-    void maxGraphPower(uint16_t tenthWatt, bool paint=true);
-    // aXXVDDDIDDDD
+    // aXXVDDDIDDDD  *
     void voltageAndCurrent(int16_t tenthVolt, int16_t tenthAmp, bool paint=true);
-    // aXXT????-
+    // aXXMP????---   CHANGED
+    void maxGraphPower(uint16_t tenthWatt, bool paint=true);
+    // aXXTI????-   CHANGED
     void timer(int16_t hundredMillis, bool paint=true);
     // aXXCD?------
     void countdown(uint8_t n, bool paint=true);

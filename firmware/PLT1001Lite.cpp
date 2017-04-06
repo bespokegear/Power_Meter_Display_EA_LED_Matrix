@@ -11,6 +11,7 @@ void PLT1001Lite::begin(long baud)
 {
     _serial.begin(baud);
     clearBuf();
+    clear();
     // TODO: explicitly set state of PLT1001 module
     // like current font and so on
 }
