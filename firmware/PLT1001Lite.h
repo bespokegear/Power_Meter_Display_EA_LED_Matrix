@@ -19,12 +19,17 @@ public:
     void begin(long baud=115200);
     void update();
 
+    void timer(const char* data);
+
     void clear(bool now=true);
     void paint();
     void setFont(uint8_t size);
 
     // Weird to have this public, but it makes porting code way quicker
     SoftwareSerial _serial;
+
+private:
+    void displayTime(const char* data, int startx, int starty, int timerColour);
 
 };
 

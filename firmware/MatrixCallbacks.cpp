@@ -16,6 +16,7 @@ void cbVoltageAndCurrent(const char* data)
 void cbTimer(const char* data)
 {
     DBLN("cbTimer");
+    Matrix.timer(data);
 }
 
 void cbClear(const char* data)
