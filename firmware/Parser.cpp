@@ -1,6 +1,7 @@
 #include <string.h>
 #include <Arduino.h>
 #include <MutilaDebug.h>
+#include "Matrix.h"
 #include "Parser.h"
 #include "Config.h"
 
@@ -66,6 +67,10 @@ void RIDisplayCommandParser::begin()
 
     // Make sure the buffer is reset
     reset();
+}
+
+void test_callback(const char* data) {
+    Matrix.string(data);
 }
 
 void RIDisplayCommandParser::update()
@@ -151,6 +156,7 @@ void RIDisplayCommandParser::update()
         if (fire) {
             DB("FIRE! data=");
             DBLN(_buf+_dataOffset);
+            test_callback(_buf+_dataOffset);
             reset();
         }
     }
