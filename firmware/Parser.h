@@ -17,18 +17,22 @@ enum RIDisplayCommand {
     String
 };
 
+typedef void (*Callback)(const char*);
+
 class RIDisplayCommandMapper {
 public:
     RIDisplayCommandMapper();
-    void add(const char* id, RIDisplayCommand cmd, uint8_t maxData);
+    void add(const char* id, RIDisplayCommand cmd, uint8_t maxData, Callback callback);
     RIDisplayCommand getCmd(const char* id);
     uint8_t getMaxData(RIDisplayCommand cmd);
+    Callback getCallback(RIDisplayCommand cmd);
 
 private:
     uint8_t _count;
     char _id[RIDCP_MAX_IDS][3];
     RIDisplayCommand _cmd[RIDCP_MAX_IDS];
     uint8_t _maxData[RIDCP_MAX_IDS];
+    Callback _callbacks[RIDCP_MAX_IDS];
 
 };
 

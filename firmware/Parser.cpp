@@ -1,7 +1,7 @@
 #include <string.h>
 #include <Arduino.h>
 #include <MutilaDebug.h>
-#include "Matrix.h"
+#include "MatrixCallbacks.h"
 #include "Parser.h"
 #include "Config.h"
 
@@ -11,7 +11,7 @@ RIDisplayCommandMapper::RIDisplayCommandMapper() : _count(0)
 {
 }
 
-void RIDisplayCommandMapper::add(const char* id, RIDisplayCommand cmd, uint8_t maxData)
+void RIDisplayCommandMapper::add(const char* id, RIDisplayCommand cmd, uint8_t maxData, Callback callback)
 {
     if (_count < RIDCP_MAX_IDS) {
         DB(F("RIDisplayCommandMapper::add "));
@@ -21,6 +21,7 @@ void RIDisplayCommandMapper::add(const char* id, RIDisplayCommand cmd, uint8_t m
         strncpy(_id[_count], id, 2);
         _cmd[_count] = cmd;
         _maxData[_count] = maxData;
+        _callbacks[_count] = callback;
         _count++;
     } else {
         DBLN(F("RIDisplayCommandMapper::add FULL"));
@@ -47,6 +48,16 @@ uint8_t RIDisplayCommandMapper::getMaxData(RIDisplayCommand cmd)
     return 0;
 }
 
+Callback RIDisplayCommandMapper::getCallback(RIDisplayCommand cmd)
+{
+    for (uint8_t i=0; i<_count; i++) {
+        if (cmd == _cmd[i]) {
+            return _callbacks[i];
+        }
+    }
+    return NULL;
+}
+
 RIDisplayCommandParser::RIDisplayCommandParser()
 {
 }
@@ -56,21 +67,17 @@ void RIDisplayCommandParser::begin()
     // Do this here rather than the constructor so that
     // we can expect Serial to be initialized for debugging
     // output...
-    _mapper.add("P", Power, 4);
-    _mapper.add("V", VoltageAndCurrent, 8);
-    _mapper.add("TI", Timer, 4);
-    _mapper.add("CL", Clear, 0);
-    _mapper.add("MP", MaxGraphPower, 4);
-    _mapper.add("ST", String, 12);
-    _mapper.add("WN", Winner, 1);
-    _mapper.add("CD", Countdown, 1);
+    _mapper.add("P",  Power,                4,  &cbPower);
+    _mapper.add("V",  VoltageAndCurrent,    8,  &cbVoltageAndCurrent);
+    _mapper.add("TI", Timer,                4,  &cbTimer);
+    _mapper.add("CL", Clear,                0,  &cbClear);
+    _mapper.add("MP", MaxGraphPower,        4,  &cbMaxGraphPower);
+    _mapper.add("ST", String,               12, &cbString);
+    _mapper.add("WN", Winner,               1,  &cbWinner);
+    _mapper.add("CD", Countdown,            1,  &cbCountdown);
 
     // Make sure the buffer is reset
     reset();
-}
-
-void test_callback(const char* data) {
-    Matrix.string(data);
 }
 
 void RIDisplayCommandParser::update()
@@ -154,9 +161,11 @@ void RIDisplayCommandParser::update()
         }
 
         if (fire) {
-            DB("FIRE! data=");
-            DBLN(_buf+_dataOffset);
-            test_callback(_buf+_dataOffset);
+            Callback cb = _mapper.getCallback(_cmd);
+            DBLN("FIRE!");
+            if (cb != NULL) {
+                cb(_buf+_dataOffset);
+            }
             reset();
         }
     }
@@ -181,5 +190,4 @@ void RIDisplayCommandParser::reset()
     _cmd = None;
     _timeout = 0;
 }
-
 
