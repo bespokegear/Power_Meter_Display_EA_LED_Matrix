@@ -9,6 +9,8 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 
+#define STR_BUF_LEN     16
+
 #define CMD_CLEAR       F("clear\r")
 #define CMD_PAINT       F("paint\r")
 
@@ -16,6 +18,7 @@ class PLT1001Lite {
 public:
     PLT1001Lite(uint8_t rxPin, uint8_t txPin);
     void begin(long baud=115200);
+    void update();
 
     // aXXP????-
     void power(int16_t tenthWatt, bool paint=true);
@@ -39,6 +42,10 @@ public:
 
 private:
     SoftwareSerial _serial;
+    char _buf[STR_BUF_LEN];
+    char* _bufPtr;
 
+    void clearBuf();
+    
 };
 
