@@ -14,7 +14,6 @@ void setup() {
 	Serial.begin(115200);
     heartbeat.begin();
     Matrix.begin();
-    Matrix.power(1234);
     Parser.begin();
     delay(100);
     Serial.println(F("setup:E"));

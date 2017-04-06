@@ -108,13 +108,13 @@ void RIDisplayCommandParser::update()
                 }
                 break;
             case 1:
-                if (_buf[1] != 'A') {
+                if (_buf[1] < 'A' || _buf[1] > 'Z') {
                     DBLN(F("RST HDR1"));
                     reset();
                 }
                 break;
             case 2:
-                if (_buf[2] != 'A') {
+                if (_buf[2] < 'A' || _buf[2] > 'Z') {
                     DBLN(F("RST HDR2"));
                     reset();
                 }
@@ -145,6 +145,13 @@ void RIDisplayCommandParser::update()
             }
             DB(F("_buf now="));
             DBLN(_buf);
+        }
+
+        // Double check we didn't exceed the buffer size.  Shouldn't ever
+        // trigger cos we have set the mapper data lengths to be small 
+        // enough that we never do this, but just in case...
+        if (_ptr >= RIDCP_BUFFER_LEN) {
+            fire = true;
         }
 
         // Test to see if we've had enough data for the current command...

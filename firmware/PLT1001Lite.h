@@ -9,10 +9,9 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 
-#define STR_BUF_LEN     16
-
-#define CMD_CLEAR       F("clear\r")
-#define CMD_PAINT       F("paint\r")
+#define COLOR_RED       1
+#define COLOR_GREEN     2
+#define COLOR_ORANGE    3
 
 class PLT1001Lite {
 public:
@@ -20,33 +19,12 @@ public:
     void begin(long baud=115200);
     void update();
 
-    // * means legacy - must support
-    // aXXP????-  *
-    void power(int16_t tenthWatt, bool paint=true);
-    // aXXVDDDIDDDD  *
-    void voltageAndCurrent(int16_t tenthVolt, int16_t tenthAmp, bool paint=true);
-    // aXXMP????---   CHANGED
-    void maxGraphPower(uint16_t tenthWatt, bool paint=true);
-    // aXXTI????-   CHANGED
-    void timer(int16_t hundredMillis, bool paint=true);
-    // aXXCD?------
-    void countdown(uint8_t n, bool paint=true);
-    // aXXWN?------
-    void winner(uint8_t team, bool paint=true);
-    // aXXCL-------
-    void clear(bool paint=true);
-    // aXXST------------
-    void string(const char* buf, bool paint=true);
+    void clear(bool now=true);
+    void paint();
+    void setFont(uint8_t size);
 
-    // Ideas:
-    // Long scrolling messages
-
-private:
+    // Weird to have this public, but it makes porting code way quicker
     SoftwareSerial _serial;
-    char _buf[STR_BUF_LEN];
-    char* _bufPtr;
 
-    void clearBuf();
-    
 };
 
