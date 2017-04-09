@@ -43,6 +43,7 @@ void cbWinner(const char* data)
 void cbCountdown(const char* data)
 {
    DBLN("cbCountdown");
+   Matrix.countdown(data);
 }
 
 
