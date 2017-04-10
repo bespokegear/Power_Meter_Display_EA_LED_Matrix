@@ -16,7 +16,7 @@ void SmallTextMode_::start(const char* data)
         DB(data[i]);
         DB(" (int)");
         DBLN((int)data[i]);
-        if (data[i] == '\r' && lineCount<3) {
+        if ((data[i] == '\r' || data[i] == '\n' || data[i] == '|') && lineCount<3) {
             DBLN("newline");
             lineCount++;
             continue;
