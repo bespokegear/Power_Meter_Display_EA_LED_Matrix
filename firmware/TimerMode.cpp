@@ -7,6 +7,8 @@ TimerMode_ TimerMode;
 
 void TimerMode_::start(const char* data)
 {
+    DB(F("TimerMode::start "));
+    DBLN(data);
     String s = data;
     // strip trailing '-' characters
     s.replace("-", "");

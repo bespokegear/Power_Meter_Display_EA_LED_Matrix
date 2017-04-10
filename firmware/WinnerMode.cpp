@@ -6,7 +6,8 @@ WinnerMode_ WinnerMode;
 
 void WinnerMode_::start(const char* data)
 {
-    DBLN(F("WinnerMode::start"));
+    DB(F("WinnerMode::start "));
+    DBLN(data);
     Matrix.clear();
     Matrix.paint();
     // draw a pretty border

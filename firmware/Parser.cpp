@@ -1,9 +1,14 @@
 #include <string.h>
 #include <Arduino.h>
 #include <MutilaDebug.h>
-#include "MatrixCallbacks.h"
+#include "Matrix.h"
 #include "Parser.h"
 #include "Config.h"
+#include "SmallTextMode.h"
+#include "ClearMode.h"
+#include "CountdownMode.h"
+#include "TimerMode.h"
+#include "WinnerMode.h"
 
 RIDisplayCommandParser Parser;
 
@@ -11,7 +16,7 @@ RIDisplayCommandMapper::RIDisplayCommandMapper() : _count(0)
 {
 }
 
-void RIDisplayCommandMapper::add(const char* id, RIDisplayCommand cmd, uint8_t maxData, Callback callback)
+void RIDisplayCommandMapper::add(const char* id, RIDisplayCommand cmd, uint8_t maxData, DisplayMode* mode)
 {
     if (_count < RIDCP_MAX_IDS) {
         DB(F("RIDisplayCommandMapper::add "));
@@ -21,7 +26,7 @@ void RIDisplayCommandMapper::add(const char* id, RIDisplayCommand cmd, uint8_t m
         strncpy(_id[_count], id, 2);
         _cmd[_count] = cmd;
         _maxData[_count] = maxData;
-        _callbacks[_count] = callback;
+        _modes[_count] = mode;
         _count++;
     } else {
         DBLN(F("RIDisplayCommandMapper::add FULL"));
@@ -48,11 +53,11 @@ uint8_t RIDisplayCommandMapper::getMaxData(RIDisplayCommand cmd)
     return 0;
 }
 
-Callback RIDisplayCommandMapper::getCallback(RIDisplayCommand cmd)
+DisplayMode* RIDisplayCommandMapper::getMode(RIDisplayCommand cmd)
 {
     for (uint8_t i=0; i<_count; i++) {
         if (cmd == _cmd[i]) {
-            return _callbacks[i];
+            return _modes[i];
         }
     }
     return NULL;
@@ -67,14 +72,14 @@ void RIDisplayCommandParser::begin()
     // Do this here rather than the constructor so that
     // we can expect Serial to be initialized for debugging
     // output...
-    _mapper.add("P",  Power,                4,  &cbPower);
-    _mapper.add("V",  VoltageAndCurrent,    8,  &cbVoltageAndCurrent);
-    _mapper.add("TI", Timer,                4,  &cbTimer);
-    _mapper.add("CL", Clear,                0,  &cbClear);
-    _mapper.add("MP", MaxGraphPower,        4,  &cbMaxGraphPower);
-    _mapper.add("ST", String,               12, &cbString);
-    _mapper.add("WN", Winner,               1,  &cbWinner);
-    _mapper.add("CD", Countdown,            1,  &cbCountdown);
+    _mapper.add("P",  Power,                4,  &SmallTextMode);
+    _mapper.add("V",  VoltageAndCurrent,    8,  &SmallTextMode);
+    _mapper.add("TI", Timer,                4,  &TimerMode);
+    _mapper.add("CL", Clear,                0,  &ClearMode);
+    _mapper.add("MP", MaxGraphPower,        4,  &SmallTextMode);
+    _mapper.add("ST", String,               12, &SmallTextMode);
+    _mapper.add("WN", Winner,               1,  &WinnerMode);
+    _mapper.add("CD", Countdown,            1,  &CountdownMode);
 
     // Make sure the buffer is reset
     reset();
@@ -168,10 +173,13 @@ void RIDisplayCommandParser::update()
         }
 
         if (fire) {
-            Callback cb = _mapper.getCallback(_cmd);
-            DBLN("FIRE!");
-            if (cb != NULL) {
-                cb(_buf+_dataOffset);
+            DB(F("READY! AIM! "));
+            DisplayMode* mode = _mapper.getMode(_cmd);
+            if (mode != NULL) {
+                DBLN(F("FIRE!"));
+                Matrix.startMode(mode, _buf+_dataOffset);
+            } else {
+                DBLN(F("[click]"));
             }
             reset();
         }

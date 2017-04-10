@@ -7,7 +7,8 @@ SmallTextMode_ SmallTextMode;
 
 void SmallTextMode_::start(const char* data)
 {
-    DBLN(F("SmallTextMode::start"));
+    DB(F("SmallTextMode::start "));
+    DBLN(data);
     String line[3];
     uint8_t lineCount = 1;
     for (uint8_t i=0; i<strlen(data); i++) {
