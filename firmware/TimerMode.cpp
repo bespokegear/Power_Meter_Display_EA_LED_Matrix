@@ -9,26 +9,33 @@ void TimerMode_::start(const char* data)
 {
     DB(F("TimerMode::start "));
     DBLN(data);
+    // Some constants we might want to tweak
+    const uint8_t fontSize = 5;
+    const uint8_t oneWidth = 8;
+    const uint8_t otherWidth = 10;
+    const uint8_t ypos = 23;
+    const uint8_t xpos = 40; // the position of the decimal point
+    
     String s = data;
     // strip trailing '-' characters
     s.replace("-", "");
 
     // Work out width in pixels of whole part text
-    // With font size 5, width of 1 is 8 pixels, 10 for other digits
     uint16_t wholePart = s.toInt()/10;
-    uint8_t wholePartWidth = wholePart == 0 ? 10 : 0;
+    uint8_t wholePartWidth = wholePart == 0 ? otherWidth+1 : 0;
     for (uint16_t i=wholePart; i>0; i/=10) {
-        wholePartWidth += (i%10==1) ? 8 : 10;
+        wholePartWidth += (i%10==1) ? oneWidth : otherWidth;
+        wholePartWidth++;
     }
-    
-    Matrix.setFont(5);
+
+    Matrix.setFont(fontSize);
     Matrix.clear();
-    // The whole part
-    Matrix.text(MATRIX_RED, 41 - wholePartWidth, 24, String(s.toInt()/10));
+    // Write the whole part
+    Matrix.text(MATRIX_RED, xpos - wholePartWidth, ypos, String(s.toInt()/10));
     // Draw the decimal point
-    Matrix.rectangle(MATRIX_RED, 43, 24, 2, 2);
-    // The fractional part (1 d.p.)
-    Matrix.text(MATRIX_RED, 46, 24, String(s.toInt()%10));
+    Matrix.rectangle(MATRIX_RED, xpos, ypos, 2, 2);
+    // Write the fractional part (1 d.p.)
+    Matrix.text(MATRIX_RED, xpos+3, ypos, String(s.toInt()%10));
     Matrix.paint();
 }
 

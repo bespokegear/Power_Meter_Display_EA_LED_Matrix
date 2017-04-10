@@ -22,7 +22,6 @@ void PowerMode_::start(const char* data)
     s.replace("-", "");
 
     // Work out width in pixels of whole part text
-    // With font size 5, width of 1 is 8 pixels, 10 for other digits
     uint16_t wholePart = s.toInt()/10;
     uint8_t wholePartWidth = wholePart == 0 ? otherWidth+1 : 0;
     for (uint16_t i=wholePart; i>0; i/=10) {
