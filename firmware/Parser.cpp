@@ -20,9 +20,7 @@ void RIDisplayCommandMapper::add(const char* id, RIDisplayCommand cmd, uint8_t m
 {
     if (_count < RIDCP_MAX_IDS) {
         DB(F("RIDisplayCommandMapper::add "));
-        DB(id);
-        DB(F(" -> "));
-        DBLN(cmd);
+        DBLN(id);
         strncpy(_id[_count], id, 2);
         _cmd[_count] = cmd;
         _maxData[_count] = maxData;
