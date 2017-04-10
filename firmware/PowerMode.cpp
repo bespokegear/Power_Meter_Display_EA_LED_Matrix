@@ -8,12 +8,19 @@
 
 PowerMode_ PowerMode;
 
-PowerMode_::PowerMode_() :
-    lastPlot(0),
-    graphPos(0),
-    maxSincePlot(0)
+PowerMode_::PowerMode_()
 {
-    clearGraph();
+    reset();
+}
+
+void PowerMode_::reset()
+{
+    memset((void*)graphData, 0, sizeof(uint32_t)*GRAPH_DATA_ITEMS);
+    lastGraphUpdate = 0;
+    lastDrawGraph = 0;
+    lastDrawValue = 0;
+    maxSinceGraph = 0;
+    maxSinceValue = 0;
 }
 
 void PowerMode_::start(const char* data)
@@ -23,28 +30,68 @@ void PowerMode_::start(const char* data)
     String s = data;
     // strip trailing '-' characters
     s.replace("-", "");
+    // Update maxSinceGraph
+    if (s.toInt() > maxSinceGraph) {
+        maxSinceGraph = s.toInt();
+    }
+    if (s.toInt() > maxSinceValue) {
+        maxSinceValue = s.toInt();
+        lastValueUpdate = millis();
+    }
+    // draw();
+}
+
+void PowerMode_::update()
+{
+    if (millis() >= lastValueUpdate + VALUE_PLOT_MS) {
+        maxSinceValue = 0;
+    }
+    // Scrolly scrolly plot plot
+    if (millis() >= lastGraphUpdate + GRAPH_PLOT_MS) {
+        updateGraph();
+        draw();
+    }
+}
+
+void PowerMode_::draw()
+{
     Matrix.clear();
-    // TODO: determine if we need to clear the graph - if we have had no value for some number of seconds
-
-    // Update maxSincePlot
-    if (s.toInt() > maxSincePlot) {
-        maxSincePlot = s.toInt();
-    }
-
-    // Plot the graph if we need to
-    if (millis() >= lastPlot + GRAPH_PLOT_MS) {
-        lastPlot = millis();
-        plotGraph();
-    }
-
-    writeValue(s.toInt());
+    drawGraph();
+    drawValue();
     Matrix.paint();
 }
 
-void PowerMode_::writeValue(uint32_t tenthsWatt)
+void PowerMode_::drawGraph()
+{
+    DBLN(F("PowerMode::drawGraph"));
+    lastDrawGraph = millis();
+
+    // Plot up to the pointer
+    int8_t idx = graphPos; 
+    for (uint8_t i=0; i<GRAPH_DATA_ITEMS; i++) {
+        idx = idx == 0 ? GRAPH_DATA_ITEMS-1 : idx-1;
+        // get the index in the graph in reverse chronological order (most recent first)
+        uint8_t height = (graphData[idx]*MATRIX_SIZE_Y)/(10*MaxPowerWatts.get());
+        if (graphData[idx]>0) {
+            Matrix.line(MATRIX_RED, MATRIX_SIZE_X-i-1, MATRIX_SIZE_Y-1, MATRIX_SIZE_X-i-1, height < MATRIX_SIZE_Y ? MATRIX_SIZE_Y-1-height : 0);
+        }
+    }
+}
+
+void PowerMode_::updateGraph()
+{
+    DBLN(F("PowerMode::updateGraph"));
+    lastGraphUpdate = millis();
+    // Add a value to the graph data & change the pointer
+    graphData[graphPos] = maxSinceGraph;
+    graphPos = (graphPos+1)%GRAPH_DATA_ITEMS;
+    maxSinceGraph = 0;
+}
+
+void PowerMode_::drawValue()
 {
     // Work out width in pixels of whole part text
-    uint16_t wholePart = tenthsWatt/10;
+    uint16_t wholePart = maxSinceValue/10;
     uint8_t wholePartWidth = wholePart == 0 ? otherWidth+1 : 0;
     for (uint16_t i=wholePart; i>0; i/=10) {
         wholePartWidth += (i%10==1) ? oneWidth : otherWidth;
@@ -57,48 +104,9 @@ void PowerMode_::writeValue(uint32_t tenthsWatt)
     // Draw the decimal point
     Matrix.rectangle(MATRIX_GREEN, xpos, ypos, 2, 2);
     // Write the fractional part (1 d.p.)
-    Matrix.text(MATRIX_GREEN, xpos+3, ypos, String(tenthsWatt%10));
+    Matrix.text(MATRIX_GREEN, xpos+3, ypos, String(maxSinceValue%10));
 }
 
-void PowerMode_::update()
-{
-}
-
-void PowerMode_::clearGraph()
-{
-    DBLN(F("PowerMode::clearGraph"));
-    memset((void*)graphData, 0, sizeof(uint32_t)*GRAPH_DATA_ITEMS);
-}
-
-void PowerMode_::plotGraph()
-{
-    DB(F("PowerMode::plotGraph 10ths="));
-    DBLN(maxSincePlot);
-    // Add a value to the graph data & change the pointer
-    graphData[graphPos] = maxSincePlot;
-    // Incremement the pointer
-    graphPos = (graphPos+1)%GRAPH_DATA_ITEMS;
-
-    // Plot up to the pointer
-    int8_t idx = graphPos; 
-    for (uint8_t i=0; i<GRAPH_DATA_ITEMS; i++) {
-        idx = idx == 0 ? GRAPH_DATA_ITEMS-1 : idx-1;
-        // get the index in the graph in reverse chronological order (most recent first)
-        uint8_t height = (graphData[idx]*MATRIX_SIZE_Y)/(10*MaxPowerWatts.get());
-        DB(F("PLOT idx="));
-        DB(idx);
-        DB(F(" 10ths="));
-        DB(graphData[idx]);
-        DB(F(" max="));
-        DB(MaxPowerWatts.get());
-        DB(F(" height="));
-        DBLN(height);
-        if (graphData[idx]>0) {
-            Matrix.line(MATRIX_RED, MATRIX_SIZE_X-i-1, MATRIX_SIZE_Y-1, MATRIX_SIZE_X-i-1, height < MATRIX_SIZE_Y ? MATRIX_SIZE_Y-1-height : 0);
-        }
-    }
-    maxSincePlot = 0;
-}
 
 
 

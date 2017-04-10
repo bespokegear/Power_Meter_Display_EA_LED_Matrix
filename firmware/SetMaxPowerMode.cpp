@@ -21,7 +21,7 @@ void SetMaxPowerMode_::start(const char* data)
         MaxPowerWatts.save();
         Matrix.text(MATRIX_ORANGE, 2, 24, s);
         Matrix.text(MATRIX_ORANGE, 32, 24, "Watts");
-        PowerMode.clearGraph();
+        PowerMode.reset();
     } else {
         Matrix.text(MATRIX_ORANGE, 2, 24, "Error");
         MaxPowerWatts.set(old);
