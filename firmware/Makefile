@@ -2,7 +2,7 @@
 CPPFLAGS += -Wno-unused-variable -Wno-deprecated-declarations -Wno-cpp -Wno-write-strings
 
 # Add flags for debugging and anything else we might have in our code...
-#CPPFLAGS += -DDEBUG
+CPPFLAGS += -DDEBUG
 
 # Each library used should be added here. Use the directory name for the library as
 # installed in your arduino libraries directory
