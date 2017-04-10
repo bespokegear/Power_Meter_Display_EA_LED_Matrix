@@ -24,7 +24,7 @@ void TimerMode_::start(const char* data)
     Matrix.setFont(5);
     Matrix.clear();
     // The whole part
-    Matrix.text(MATRIX_RED, 40 - wholePartWidth, 24, String(s.toInt()/10));
+    Matrix.text(MATRIX_RED, 41 - wholePartWidth, 24, String(s.toInt()/10));
     // Draw the decimal point
     Matrix.rectangle(MATRIX_RED, 43, 24, 2, 2);
     // The fractional part (1 d.p.)
