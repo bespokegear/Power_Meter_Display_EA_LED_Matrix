@@ -8,6 +8,7 @@ void CountdownMode_::start(const char* data)
 {
     startMs = millis();
     n = String(data).toInt();
+    i = 0;
     DBLN(F("CountdownMode::start"));
     Matrix.clear();
     Matrix.paint();
