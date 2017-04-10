@@ -49,7 +49,7 @@ Commands
 - ST - string display; parameter is the string to display up to 12 character, e.g. aAASTBananas, displays "Bananas"
 - CD - countdown; parameter is a one countdown number, e.g. "aAACD2"
 - TI - timer; parameter is a four digit 10ths of seconds number, e.g. "aAATI1234" displays "123.4"
-- P - power display in watts; parameter is power in tenths of a watt, e.g. "3142", displays "313.2 W"
+- P - power display in watts; parameter is power in tenths of a watt up to 99999, e.g. "31416", displays "3141.6 W"
 - CL - clears the display - does not require a paremeter
 - WN - winner; paremeter is the winning team / player number.  If 0, it's a tie. e.g. "aAAWN0" displays "WINNER: TIE!"
 - MP - max power graph; see below

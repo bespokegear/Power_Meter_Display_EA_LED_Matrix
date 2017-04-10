@@ -17,7 +17,7 @@ void setup() {
     Matrix.begin(&softSerial);
     Parser.begin();
     delay(100);
-    Serial.println(F("setup:E"));
+    DBLN(F("setup:E"));
 }
 
 void loop () {

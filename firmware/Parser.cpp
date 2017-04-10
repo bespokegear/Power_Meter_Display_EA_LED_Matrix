@@ -9,6 +9,7 @@
 #include "CountdownMode.h"
 #include "TimerMode.h"
 #include "WinnerMode.h"
+#include "PowerMode.h"
 
 RIDisplayCommandParser Parser;
 
@@ -70,7 +71,7 @@ void RIDisplayCommandParser::begin()
     // Do this here rather than the constructor so that
     // we can expect Serial to be initialized for debugging
     // output...
-    _mapper.add("P",  Power,                4,  &SmallTextMode);
+    _mapper.add("P",  Power,                5,  &PowerMode);
     _mapper.add("V",  VoltageAndCurrent,    8,  &SmallTextMode);
     _mapper.add("TI", Timer,                4,  &TimerMode);
     _mapper.add("CL", Clear,                0,  &ClearMode);
