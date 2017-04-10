@@ -8,6 +8,7 @@
 #include "Config.h"
 #include "Matrix.h"
 #include "Parser.h"
+#include "Settings.h"
 
 SoftwareSerial softSerial(SW_SERIAL_RX, SW_SERIAL_TX);
 Heartbeat heartbeat(HEARTBEAT_PIN);
@@ -17,6 +18,8 @@ void setup() {
     heartbeat.begin();
     Matrix.begin(&softSerial);
     Parser.begin();
+    Serial.print(F("Max Graph Power: "));
+    Serial.println(MaxPowerWatts.get());
     delay(100);
     DBLN(F("setup:E"));
 }

@@ -216,13 +216,9 @@ void RIDisplayCommandParser::setID(uint8_t id0, uint8_t id1)
     _id1 = id1;
     if ((_id0 < 'A' || id0 > 'Z') && id0 != '*') _id0 = '*';
     if ((_id1 < 'A' || id1 > 'Z') && id1 != '*') _id1 = '*';
-    DB(F("Display ID is now: 0x"));
-    DB(_id0, HEX);
-    DB(F(" 0x"));
-    DB(_id1, HEX);
-    DB(F(" == "));
-    DB((char)_id0);
-    DBLN((char)_id1);
+    Serial.print(F("Display ID is: "));
+    Serial.print((char)_id0);
+    Serial.println((char)_id1);
 }
 
 

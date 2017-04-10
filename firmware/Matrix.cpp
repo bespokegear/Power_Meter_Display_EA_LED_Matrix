@@ -12,6 +12,8 @@ Matrix_::Matrix_()
 void Matrix_::begin(SoftwareSerial* ss, unsigned long baud)
 {
     PLT1001::begin(ss, baud);
+    // Wait for display board to boot
+    delay(1000);
     startMode(&HelloMode);
 }
 
