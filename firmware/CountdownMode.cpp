@@ -20,13 +20,22 @@ void CountdownMode_::update()
 {
     unsigned long next = startMs + (i*2);
     if (millis() >= next && i < 18) {
+        uint8_t bgCol[3] = { MATRIX_GREEN, MATRIX_ORANGE, MATRIX_RED };
+        uint8_t txCol[3] = { MATRIX_RED, MATRIX_GREEN, MATRIX_ORANGE };
+        uint8_t colIdx = n % 3;
         i+=1;
-        Matrix.rectangle(MATRIX_RED, 17-i, 15+i, 30+(i*2), i*2);
-        Matrix.rectangle(MATRIX_BLACK, 17-(i-3), 15+(i-3), 30+((i-3)*2), (i-3)*2);
-        if (n==0) {
-            Matrix.text(MATRIX_ORANGE, 20, 23, "Go!");
-        } else {
-            Matrix.text(MATRIX_ORANGE, 27, 23, String(n));
+        Matrix.rectangle(bgCol[colIdx], 17-i, 15+i, 30+(i*2), i*2);
+
+        // At the end of the sequence, draw the text
+        if (i==17) {
+            if (n==0) {
+                Matrix.text(txCol[colIdx], 20, 23, "Go!");
+            } else if (n==1) {
+                // digit '1' is narrower than other digits
+                Matrix.text(txCol[colIdx], 29, 23, String(n));
+            } else {
+                Matrix.text(txCol[colIdx], 27, 23, String(n));
+            }
         }
         Matrix.paint();
     }
