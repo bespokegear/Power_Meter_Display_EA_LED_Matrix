@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Arduino.h>
 #include "DisplayMode.h"
 #include "PLT1001.h"
 

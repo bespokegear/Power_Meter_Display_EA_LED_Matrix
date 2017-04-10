@@ -11,6 +11,7 @@
 #include "WinnerMode.h"
 #include "PowerMode.h"
 #include "SetMaxPowerMode.h"
+#include "Settings.h"
 
 RIDisplayCommandParser Parser;
 
@@ -65,6 +66,8 @@ DisplayMode* RIDisplayCommandMapper::getMode(RIDisplayCommand cmd)
 
 RIDisplayCommandParser::RIDisplayCommandParser()
 {
+    setID(DisplayID0.get(), DisplayID1.get());
+    //setID('*', '*');
 }
 
 void RIDisplayCommandParser::begin()
@@ -113,13 +116,13 @@ void RIDisplayCommandParser::update()
                 }
                 break;
             case 1:
-                if (_buf[1] < 'A' || _buf[1] > 'Z') {
+                if (_buf[1] != _id0 && _id0 != '*') {
                     DBLN(F("RST HDR1"));
                     reset();
                 }
                 break;
             case 2:
-                if (_buf[2] < 'A' || _buf[2] > 'Z') {
+                if (_buf[2] != _id1 && _id1 != '*') {
                     DBLN(F("RST HDR2"));
                     reset();
                 }
@@ -205,4 +208,20 @@ void RIDisplayCommandParser::reset()
     _cmd = None;
     _timeout = 0;
 }
+
+void RIDisplayCommandParser::setID(uint8_t id0, uint8_t id1)
+{
+    _id0 = id0;
+    _id1 = id1;
+    if ((_id0 < 'A' || id0 > 'Z') && id0 != '*') _id0 = '*';
+    if ((_id1 < 'A' || id1 > 'Z') && id1 != '*') _id1 = '*';
+    DB(F("Display ID is now: 0x"));
+    DB(_id0, HEX);
+    DB(F(" 0x"));
+    DB(_id1, HEX);
+    DB(F(" == "));
+    DB((char)_id0);
+    DBLN((char)_id1);
+}
+
 

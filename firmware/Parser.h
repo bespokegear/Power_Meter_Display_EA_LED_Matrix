@@ -46,9 +46,12 @@ public:
     bool valid();
     bool complete();
     void reset();
+    void setID(uint8_t id0, uint8_t id1);
 
 private:
     RIDisplayCommandMapper _mapper;
+    uint8_t _id0;
+    uint8_t _id1;
     char _buf[RIDCP_BUFFER_LEN];
     uint8_t _ptr;
     char _dataOffset;
