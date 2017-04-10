@@ -58,8 +58,6 @@ void PowerMode_::writeValue(uint32_t tenthsWatt)
     Matrix.rectangle(MATRIX_GREEN, xpos, ypos, 2, 2);
     // Write the fractional part (1 d.p.)
     Matrix.text(MATRIX_GREEN, xpos+3, ypos, String(tenthsWatt%10));
-    // Write the units symbol (Watts)
-    Matrix.text(MATRIX_GREEN, xpos+otherWidth+4, ypos, "W");
 }
 
 void PowerMode_::update()

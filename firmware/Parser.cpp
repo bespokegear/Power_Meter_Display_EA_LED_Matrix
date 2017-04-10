@@ -10,6 +10,7 @@
 #include "TimerMode.h"
 #include "WinnerMode.h"
 #include "PowerMode.h"
+#include "SetMaxPowerMode.h"
 
 RIDisplayCommandParser Parser;
 
@@ -75,7 +76,7 @@ void RIDisplayCommandParser::begin()
     _mapper.add("V",  VoltageAndCurrent,    8,  &SmallTextMode);
     _mapper.add("TI", Timer,                4,  &TimerMode);
     _mapper.add("CL", Clear,                0,  &ClearMode);
-    _mapper.add("MP", MaxGraphPower,        4,  &SmallTextMode);
+    _mapper.add("MP", MaxGraphPower,        4,  &SetMaxPowerMode);
     _mapper.add("ST", String,               12, &SmallTextMode);
     _mapper.add("WN", Winner,               1,  &WinnerMode);
     _mapper.add("CD", Countdown,            1,  &CountdownMode);

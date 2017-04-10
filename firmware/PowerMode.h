@@ -26,7 +26,7 @@ private:
     static const uint8_t oneWidth = 8;
     static const uint8_t otherWidth = 10;
     static const uint8_t ypos = 18;
-    static const uint8_t xpos = 39; // the position of the decimal point
+    static const uint8_t xpos = 45; // the position of the decimal point
 
     unsigned long lastPlot; 
     uint32_t graphData[GRAPH_DATA_ITEMS];
