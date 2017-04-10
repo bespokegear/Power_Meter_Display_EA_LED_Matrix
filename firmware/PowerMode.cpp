@@ -96,7 +96,7 @@ void PowerMode_::plotGraph()
         DB(F(" height="));
         DBLN(height);
         if (graphData[idx]>0) {
-            Matrix.line(MATRIX_RED, MATRIX_SIZE_X-i-1, MATRIX_SIZE_Y-1, MATRIX_SIZE_X-i-1, MATRIX_SIZE_Y-1-height);
+            Matrix.line(MATRIX_RED, MATRIX_SIZE_X-i-1, MATRIX_SIZE_Y-1, MATRIX_SIZE_X-i-1, height < MATRIX_SIZE_Y ? MATRIX_SIZE_Y-1-height : 0);
         }
     }
     maxSincePlot = 0;
