@@ -11,6 +11,7 @@
 #include "WinnerMode.h"
 #include "PowerMode.h"
 #include "SetMaxPowerMode.h"
+#include "SetIDMode.h"
 #include "Settings.h"
 
 RIDisplayCommandParser Parser;
@@ -66,8 +67,6 @@ DisplayMode* RIDisplayCommandMapper::getMode(RIDisplayCommand cmd)
 
 RIDisplayCommandParser::RIDisplayCommandParser()
 {
-    setID(DisplayID0.get(), DisplayID1.get());
-    //setID('*', '*');
 }
 
 void RIDisplayCommandParser::begin()
@@ -75,6 +74,7 @@ void RIDisplayCommandParser::begin()
     // Do this here rather than the constructor so that
     // we can expect Serial to be initialized for debugging
     // output...
+    setID(DisplayID0.get(), DisplayID1.get());
     _mapper.add("P",  Power,                5,  &PowerMode);
     _mapper.add("V",  VoltageAndCurrent,    8,  &SmallTextMode);
     _mapper.add("TI", Timer,                4,  &TimerMode);
@@ -83,6 +83,7 @@ void RIDisplayCommandParser::begin()
     _mapper.add("ST", String,               12, &SmallTextMode);
     _mapper.add("WN", Winner,               1,  &WinnerMode);
     _mapper.add("CD", Countdown,            1,  &CountdownMode);
+    _mapper.add("ID", SetID,                2,  &SetIDMode);
 
     // Make sure the buffer is reset
     reset();

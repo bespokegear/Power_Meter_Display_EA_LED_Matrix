@@ -4,7 +4,7 @@
 #include "DisplayMode.h"
 
 #define RIDCP_BUFFER_LEN    24
-#define RIDCP_MAX_IDS       8
+#define RIDCP_MAX_IDS       10
 
 enum RIDisplayCommand {
     None,
@@ -15,7 +15,8 @@ enum RIDisplayCommand {
     Countdown,
     Winner,
     Clear,
-    String
+    String,
+    SetID
 };
 
 typedef void (*Callback)(const char*);
