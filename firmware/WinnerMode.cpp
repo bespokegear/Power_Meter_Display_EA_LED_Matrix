@@ -18,18 +18,21 @@ void WinnerMode_::start(const char* data)
 
     // draw "Winner:" with small font
     Matrix.setFont(2);
-    Matrix.text(MATRIX_ORANGE, 16, 8, "WINNER");
+    Matrix.text(MATRIX_RED, 15, 8, "WINNER");
+    // draw a colon with pixels - nicer than font colon
+    Matrix.pixel(MATRIX_RED, 49, 5);
+    Matrix.pixel(MATRIX_RED, 49, 7);
     
     // draw who is the winner in big text
     Matrix.setFont(5);
     switch(data[0]) {
     case '0':
-        Matrix.text(MATRIX_ORANGE, 15, 26, "TIE!");
+        Matrix.text(MATRIX_ORANGE, 16, 27, "TIE!");
         break;
     case '1':
-        Matrix.text(MATRIX_ORANGE, 29, 26, String(data[0]));
+        Matrix.text(MATRIX_ORANGE, 29, 27, String(data[0]));
     case '2':
-        Matrix.text(MATRIX_ORANGE, 27, 26, String(data[0]));
+        Matrix.text(MATRIX_ORANGE, 27, 27, String(data[0]));
         break;
     default:
         DB(F("CountdownMode ERR bad param: "));
