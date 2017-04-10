@@ -4,6 +4,7 @@
 #include "PowerMode.h"
 #include "Matrix.h"
 #include "Config.h"
+#include "Settings.h"
 
 PowerMode_ PowerMode;
 
@@ -85,13 +86,13 @@ void PowerMode_::plotGraph()
     for (uint8_t i=0; i<GRAPH_DATA_ITEMS; i++) {
         idx = idx == 0 ? GRAPH_DATA_ITEMS-1 : idx-1;
         // get the index in the graph in reverse chronological order (most recent first)
-        uint8_t height = (graphData[idx]*MATRIX_SIZE_Y)/(10*GRAPH_MAX_WATT);
+        uint8_t height = (graphData[idx]*MATRIX_SIZE_Y)/(10*MaxPowerWatts.get());
         DB(F("PLOT idx="));
         DB(idx);
         DB(F(" 10ths="));
         DB(graphData[idx]);
         DB(F(" max="));
-        DB(GRAPH_MAX_WATT);
+        DB(MaxPowerWatts.get());
         DB(F(" height="));
         DBLN(height);
         if (graphData[idx]>0) {

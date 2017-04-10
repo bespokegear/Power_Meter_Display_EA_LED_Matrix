@@ -1,7 +1,8 @@
 #include <Arduino.h>
+#include <SoftwareSerial.h>
+#include <EEPROM.h>
 #include <Heartbeat.h>
 #include <MutilaDebug.h>
-#include <SoftwareSerial.h>
 #include <stdint.h>
 
 #include "Config.h"
