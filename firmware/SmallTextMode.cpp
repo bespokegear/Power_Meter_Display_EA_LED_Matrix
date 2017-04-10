@@ -43,7 +43,7 @@ void SmallTextMode_::start(const char* data)
     Matrix.clear();
     Matrix.setFont(2);
     for (uint8_t i=0; i<lineCount; i++) {
-        Matrix.text(MATRIX_ORANGE, 2, y, line[i]);
+        Matrix.text(MATRIX_ORANGE, 1, y, line[i]);
         y += 8;
     }
     Matrix.paint();
