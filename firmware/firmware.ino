@@ -8,12 +8,13 @@
 #include "Matrix.h"
 #include "Parser.h"
 
+SoftwareSerial softSerial(SW_SERIAL_RX, SW_SERIAL_TX);
 Heartbeat heartbeat(HEARTBEAT_PIN);
 
 void setup() {
 	Serial.begin(115200);
     heartbeat.begin();
-    Matrix.begin();
+    Matrix.begin(&softSerial);
     Parser.begin();
     delay(100);
     Serial.println(F("setup:E"));

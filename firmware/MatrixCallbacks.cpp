@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <MutilaDebug.h>
+#include "TimerMode.h"
+#include "ClearMode.h"
+#include "CountdownMode.h"
 #include "Matrix.h"
 
 void cbPower(const char* data)
@@ -16,13 +19,13 @@ void cbVoltageAndCurrent(const char* data)
 void cbTimer(const char* data)
 {
     DBLN("cbTimer");
-    Matrix.timer(data);
+    Matrix.startMode(&TimerMode, data);
 }
 
 void cbClear(const char* data)
 {
     DBLN("cbClear");
-    Matrix.clear(true);
+    Matrix.startMode(&ClearMode, data);
 }
 
 void cbMaxGraphPower(const char* data)
@@ -42,8 +45,8 @@ void cbWinner(const char* data)
 
 void cbCountdown(const char* data)
 {
-   DBLN("cbCountdown");
-   Matrix.countdown(data);
+    DBLN("cbCountdown");
+    Matrix.startMode(&CountdownMode, data);
 }
 
 
