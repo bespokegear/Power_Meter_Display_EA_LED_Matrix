@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include "DisplayMode.h"
 
-#define RIDCP_BUFFER_LEN    24
+#define RIDCP_BUFFER_LEN    80
 #define RIDCP_MAX_IDS       10
 
 enum RIDisplayCommand {
