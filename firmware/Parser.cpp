@@ -80,7 +80,7 @@ void RIDisplayCommandParser::begin()
     _mapper.add("TI", Timer,                4,  &TimerMode);
     _mapper.add("CL", Clear,                0,  &ClearMode);
     _mapper.add("MP", MaxGraphPower,        4,  &SetMaxPowerMode);
-    _mapper.add("ST", String,               35, &SmallTextMode);
+    _mapper.add("ST", String,               RIDCP_BUFFER_LEN-6, &SmallTextMode);
     _mapper.add("WN", Winner,               1,  &WinnerMode);
     _mapper.add("CD", Countdown,            1,  &CountdownMode);
     _mapper.add("ID", SetID,                2,  &SetIDMode);
