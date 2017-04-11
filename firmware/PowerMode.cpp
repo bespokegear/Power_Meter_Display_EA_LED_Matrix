@@ -74,20 +74,12 @@ void PowerMode_::updateGraph()
 
 void PowerMode_::drawValue()
 {
-    // Work out width in pixels of whole part text
-    uint16_t wholePart = lastValue/10;
-    uint8_t wholePartWidth = wholePart == 0 ? otherWidth+1 : 0;
-    for (uint16_t i=wholePart; i>0; i/=10) {
-        wholePartWidth += (i%10==1) ? oneWidth : otherWidth;
-        wholePartWidth++;
-    }
-
-    Matrix.setFont(fontSize);
+    Matrix.setFont(6);
     // Write the whole part
-    Matrix.text(MATRIX_GREEN, xpos-wholePartWidth, ypos, String(wholePart));
+    Matrix.rtext(MATRIX_GREEN, 50, 24, String(lastValue/10));
     // Write the fractional part (1 d.p.)
-    Matrix.setFont(fontSize-2);
-    Matrix.text(MATRIX_ORANGE, xpos-1, ypos-3, "W");
+    Matrix.setFont(4);
+    Matrix.text(MATRIX_ORANGE, 50+3, 21, "W");
 }
 
 

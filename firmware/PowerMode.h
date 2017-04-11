@@ -30,13 +30,6 @@ protected:
     void updateGraph();
 
 private:
-    // Some constants we might want to tweak
-    static const uint8_t fontSize = 6;
-    static const uint8_t oneWidth = 9;
-    static const uint8_t otherWidth = 12;
-    static const uint8_t ypos = 23;
-    static const uint8_t xpos = 55; // the right hand side of the number
-
     unsigned long lastGraphUpdate; 
     uint32_t lastValue;
     uint32_t graphData[GRAPH_DATA_ITEMS];
