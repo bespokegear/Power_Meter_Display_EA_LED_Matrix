@@ -1,0 +1,10 @@
+archive/*
+tmp
+TODO
+*~
+.*~
+.*swp
+**/build-*
+**/*.pyc
+**/*.o
+**/__pycache__

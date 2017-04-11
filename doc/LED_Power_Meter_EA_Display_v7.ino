@@ -1,10 +1,10 @@
 /********************************************************
-  /****** LED Power Meter Display CODE ********************
-  /****** by Matt Little **********************************
-  /****** Date: 13/3/2017 ************************************
-  /****** info@re-innovation.co.uk ************************
-  /****** www.re-innovation.co.uk *************************
-  /********************************************************
+ ******** LED Power Meter Display CODE ******************
+ ******** by Matt Little ********************************
+ ******** Date: 13/3/2017 *******************************
+ ******** info@re-innovation.co.uk **********************
+ ******** www.re-innovation.co.uk ***********************
+ ********************************************************
 
   See www.re-innovation.co.uk for information and
   construction details
@@ -12,21 +12,23 @@
   This is code for the Embedded Adventures LED display unit:
   https://www.embeddedadventures.com/datasheets/PLT-1001_hw_v4_doc_v3.pdf
 
-  This unit takes values of Time and Power and displays them on a large LED matrix
-  Time Mode:
-  The data is sent "aXXT0001-----" where XX is aa reference (does not matter which)
-  The time is a three digit value of 100's milli-seconds (eg 0.1, 1.2, 10.5 etc)
+  This unit takes values of Time and Power and displays 
+  them on a large LED matrix Time Mode:
+  The data is sent "aXXT0001-----" where XX is aa reference 
+  (does not matter which). The time is a three digit value of 100's 
+  milli-seconds (eg 0.1, 1.2, 10.5 etc). 
   Want the display to take serial data and update the LED display
   Want a display to show 3 - 2 - 1 GO then show
 
-  /*************Details of Code*****************************
+ *************** Details of Code ************************
 
-   The PCB/schematic files are available from: www.re-innovation.co.uk
+  The PCB/schematic files are available from: www.re-innovation.co.uk
 
   This code is for an Arduino Nano
 
   It reads serial data (on D0/D1, Tx/Rx).
-  It parses that data and displays the power on a large Embedded Adventures serial LED display.
+  It parses that data and displays the power on a large Embedded 
+  Adventures serial LED display.
 
   Display connections:
   EA controller is on Tx = D12, Rx = D11
@@ -35,11 +37,16 @@
 
   Two switches are included on D5 and D9
 
-   Power data is read on the serial port at 115200 baud
-   ****protocol for straming data to serial****
+  Power data is read on the serial port at 115200 baud
 
-  There are a number of functions which can be adjusted via software commands. The main protocol is based upon LLAP (Lightweight Local Automation Protocol), with some additional features.
+  **** Protocol for straming data to serial ****
+
+  There are a number of functions which can be adjusted via software 
+  commands. The main protocol is based upon LLAP (Lightweight Local
+  Automation Protocol), with some additional features.
+
   http://openmicros.org/index.php/articles/85-llap-lightweight-local-automation-protocol/101-llap-starter
+
   This uses a 12 character message in the format:
   “aXXDDDDDDDDD”
   Where a is the start signifier and XX is the device ID, from AA to ZZ.
@@ -356,7 +363,7 @@ void loop()
 
   }
 
-  delay(50);   // Short pause to stop everything running too quick
+  delay(30);   // Short pause to stop everything running too quick
 }
 
 
@@ -387,7 +394,7 @@ void getData()
       break;
     }
   } 
-  if(str_buffer[0]=='a')
+  if(str_buffer[0]=='a'&&((str_buffer[str_buffer.length()-1]=='-')||(str_buffer[str_buffer.length()-1]=='\r')||(str_buffer[str_buffer.length()-1]=='\n')))
   {
     Serial.println(str_buffer);  // TEST - print the str_buffer data (if it has arrived)
     sortData();
@@ -396,7 +403,7 @@ void getData()
   else
   {
     str_buffer = ""; // Reset the buffer to be filled again
-    Serial.println("Not OK");
+    //Serial.println("Not OK");
   } 
 }
 
@@ -480,7 +487,6 @@ void sortData()
     {
       Serial.println("Invalid T");
     }
-
   }
 
   //  Count Down
@@ -623,14 +629,26 @@ void sortData()
       // Set the font size
       mySerial.print("font 6\r");
 
-      // Then Display the number of the winner
-      mySerial.print("text 3 27 28 ");
-      mySerial.print('"');
-      mySerial.print(timeValue);
-      mySerial.print('"');
-      mySerial.print("\r");
-      // Then we display it all
-      mySerial.print(paint);             
+      if(timeValue==0)
+      {
+        // This is a tie
+        mySerial.print("text 3 16 28 ");
+        mySerial.print('"');
+        mySerial.print("TIE");
+        mySerial.print('"');
+        mySerial.print("\r");        
+      }
+      else
+      {
+        // Then Display the number of the winner
+        mySerial.print("text 3 27 28 ");
+        mySerial.print('"');
+        mySerial.print(timeValue);
+        mySerial.print('"');
+        mySerial.print("\r");      
+      }
+      // Then we display it all      
+      mySerial.print(paint); 
     }
   }
 
