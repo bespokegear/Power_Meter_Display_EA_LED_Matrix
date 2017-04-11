@@ -17,10 +17,6 @@ void PowerMode_::reset()
 {
     memset((void*)graphData, 0, sizeof(uint32_t)*GRAPH_DATA_ITEMS);
     lastGraphUpdate = 0;
-    lastDrawGraph = 0;
-    lastDrawValue = 0;
-    maxSinceGraph = 0;
-    maxSinceValue = 0;
 }
 
 void PowerMode_::start(const char* data)
@@ -30,22 +26,12 @@ void PowerMode_::start(const char* data)
     String s = data;
     // strip trailing '-' characters
     s.replace("-", "");
-    // Update maxSinceGraph
-    if (s.toInt() > maxSinceGraph) {
-        maxSinceGraph = s.toInt();
-    }
-    if (s.toInt() > maxSinceValue) {
-        maxSinceValue = s.toInt();
-        lastValueUpdate = millis();
-    }
-    // draw();
+    lastValue = s.toInt();
+    draw();
 }
 
 void PowerMode_::update()
 {
-    if (millis() >= lastValueUpdate + VALUE_PLOT_MS) {
-        maxSinceValue = 0;
-    }
     // Scrolly scrolly plot plot
     if (millis() >= lastGraphUpdate + GRAPH_PLOT_MS) {
         updateGraph();
@@ -64,7 +50,6 @@ void PowerMode_::draw()
 void PowerMode_::drawGraph()
 {
     DBLN(F("PowerMode::drawGraph"));
-    lastDrawGraph = millis();
 
     // Plot up to the pointer
     int8_t idx = graphPos; 
@@ -83,15 +68,14 @@ void PowerMode_::updateGraph()
     DBLN(F("PowerMode::updateGraph"));
     lastGraphUpdate = millis();
     // Add a value to the graph data & change the pointer
-    graphData[graphPos] = maxSinceGraph;
+    graphData[graphPos] = lastValue;
     graphPos = (graphPos+1)%GRAPH_DATA_ITEMS;
-    maxSinceGraph = 0;
 }
 
 void PowerMode_::drawValue()
 {
     // Work out width in pixels of whole part text
-    uint16_t wholePart = maxSinceValue/10;
+    uint16_t wholePart = lastValue/10;
     uint8_t wholePartWidth = wholePart == 0 ? otherWidth+1 : 0;
     for (uint16_t i=wholePart; i>0; i/=10) {
         wholePartWidth += (i%10==1) ? oneWidth : otherWidth;
@@ -100,11 +84,10 @@ void PowerMode_::drawValue()
 
     Matrix.setFont(fontSize);
     // Write the whole part
-    Matrix.text(MATRIX_GREEN, xpos - wholePartWidth, ypos, String(wholePart));
-    // Draw the decimal point
-    Matrix.rectangle(MATRIX_GREEN, xpos, ypos, 2, 2);
+    Matrix.text(MATRIX_GREEN, xpos-wholePartWidth, ypos, String(wholePart));
     // Write the fractional part (1 d.p.)
-    Matrix.text(MATRIX_GREEN, xpos+3, ypos, String(maxSinceValue%10));
+    Matrix.setFont(fontSize-2);
+    Matrix.text(MATRIX_ORANGE, xpos-1, ypos-3, "W");
 }
 
 

@@ -31,18 +31,14 @@ protected:
 
 private:
     // Some constants we might want to tweak
-    static const uint8_t fontSize = 5;
-    static const uint8_t oneWidth = 8;
-    static const uint8_t otherWidth = 10;
-    static const uint8_t ypos = 18;
-    static const uint8_t xpos = 45; // the position of the decimal point
+    static const uint8_t fontSize = 6;
+    static const uint8_t oneWidth = 9;
+    static const uint8_t otherWidth = 12;
+    static const uint8_t ypos = 23;
+    static const uint8_t xpos = 55; // the right hand side of the number
 
     unsigned long lastGraphUpdate; 
-    unsigned long lastValueUpdate; 
-    unsigned long lastDrawGraph;
-    unsigned long lastDrawValue;
-    uint32_t maxSinceGraph;
-    uint32_t maxSinceValue;
+    uint32_t lastValue;
     uint32_t graphData[GRAPH_DATA_ITEMS];
     uint8_t graphPos;
 

@@ -1,5 +1,5 @@
 #include "Matrix.h"
-#include "HelloMode.h"
+#include "ClearMode.h"
 #include <stdio.h>
 
 Matrix_ Matrix;
@@ -12,9 +12,7 @@ Matrix_::Matrix_()
 void Matrix_::begin(SoftwareSerial* ss, unsigned long baud)
 {
     PLT1001::begin(ss, baud);
-    // Wait for display board to boot
-    delay(1000);
-    startMode(&HelloMode);
+    startMode(&ClearMode);
 }
 
 void Matrix_::startMode(DisplayMode* newMode, const char* data)
