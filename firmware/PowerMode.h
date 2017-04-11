@@ -38,11 +38,7 @@ private:
     static const uint8_t xpos = 45; // the position of the decimal point
 
     unsigned long lastGraphUpdate; 
-    unsigned long lastValueUpdate; 
-    unsigned long lastDrawGraph;
-    unsigned long lastDrawValue;
-    uint32_t maxSinceGraph;
-    uint32_t maxSinceValue;
+    uint32_t lastValue;
     uint32_t graphData[GRAPH_DATA_ITEMS];
     uint8_t graphPos;
 
