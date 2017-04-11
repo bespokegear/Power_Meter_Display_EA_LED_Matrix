@@ -43,7 +43,8 @@ uint8_t Matrix_::getCharacterWidth(const uint8_t fontSize, const char c)
     if (fontSize < 1 || fontSize > 7) {
         return 0;
     } else {
-        return pgm_read_byte_near(CharacterWidth+((fontSize-1)*94)+c-('A'-'!'+1));
+        if (c == ' ') return 3;
+        else return pgm_read_byte_near(CharacterWidth+((fontSize-1)*94)+c-('A'-'!'+1));
     }
 }
 

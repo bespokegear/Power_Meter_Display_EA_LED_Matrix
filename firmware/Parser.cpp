@@ -5,6 +5,7 @@
 #include "Parser.h"
 #include "Config.h"
 #include "SmallTextMode.h"
+#include "TextMode.h"
 #include "ClearMode.h"
 #include "CountdownMode.h"
 #include "TimerMode.h"
@@ -81,6 +82,7 @@ void RIDisplayCommandParser::begin()
     _mapper.add("CL", Clear,                0,  &ClearMode);
     _mapper.add("MP", MaxGraphPower,        4,  &SetMaxPowerMode);
     _mapper.add("ST", String,               RIDCP_BUFFER_LEN-6, &SmallTextMode);
+    _mapper.add("TE", Text,                 RIDCP_BUFFER_LEN-6, &TextMode);
     _mapper.add("WN", Winner,               1,  &WinnerMode);
     _mapper.add("CD", Countdown,            1,  &CountdownMode);
     _mapper.add("ID", SetID,                2,  &SetIDMode);

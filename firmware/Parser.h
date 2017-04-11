@@ -16,6 +16,7 @@ enum RIDisplayCommand {
     Winner,
     Clear,
     String,
+    Text,
     SetID
 };
 
