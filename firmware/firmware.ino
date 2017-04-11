@@ -21,20 +21,9 @@ void setup() {
     Parser.begin();
     Serial.print(F("Max Graph Power: "));
     Serial.println(MaxPowerWatts.get());
-    for (uint8_t fontSize=0; fontSize<=8; fontSize++) {
-        DB(F("FontSize "));
-        DB(fontSize);
-        DB(F(" pixels high: "));
-        DB(getCharacterHeight(fontSize));
-        DB(F(" characters:"));
-        for (char c='A'; c<'K'; c++) {
-            DB(' ');
-            DB(c);
-            DB('=');
-            DB(getCharacterWidth(fontSize, c));
-        }
-        DBLN('.');
-    }
+    DB(F("Width of \"hello\" in font 2 = "));
+    DBLN(getStringWidth(2, "hello"));
+    Matrix.text(MATRIX_RED, 0, 15, "hello");
     delay(100);
     DBLN(F("setup:E"));
 }
