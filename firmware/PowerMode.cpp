@@ -84,11 +84,10 @@ void PowerMode_::drawValue()
 
     Matrix.setFont(fontSize);
     // Write the whole part
-    Matrix.text(MATRIX_GREEN, xpos - wholePartWidth, ypos, String(wholePart));
-    // Draw the decimal point
-    Matrix.rectangle(MATRIX_GREEN, xpos, ypos, 2, 2);
+    Matrix.text(MATRIX_GREEN, xpos-wholePartWidth, ypos, String(wholePart));
     // Write the fractional part (1 d.p.)
-    Matrix.text(MATRIX_GREEN, xpos+3, ypos, String(lastValue%10));
+    Matrix.setFont(fontSize-2);
+    Matrix.text(MATRIX_ORANGE, xpos-1, ypos-3, "W");
 }
 
 
