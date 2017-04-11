@@ -33,6 +33,10 @@ public:
     uint8_t getStringWidth(const uint8_t, const char* s);
     uint8_t getStringWidth(const uint8_t, String s);
 
+    // right justified text
+	void rtext(uns8 color, uns16 x, uns16 y, const char* s);
+	// void rtext(uns8 color, uns16 x, uns16 y, String text);
+
 private:
     DisplayMode* mode;
 
