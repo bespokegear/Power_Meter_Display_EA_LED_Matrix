@@ -25,10 +25,13 @@ public:
     void begin(SoftwareSerial* ss, unsigned long baud=115200);
     void startMode(DisplayMode* newMode, const char* data=NULL);
     void update();
+
+    // Information about character sizes
     uint8_t getCharacterHeight(const uint8_t fontSize);
     uint8_t getCharacterWidth(const uint8_t fontSize, const char c);
     uint8_t getGutterWidth(const uint8_t fontSize);
     uint8_t getStringWidth(const uint8_t, const char* s);
+    uint8_t getStringWidth(const uint8_t, String s);
 
 private:
     DisplayMode* mode;

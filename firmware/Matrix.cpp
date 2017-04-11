@@ -63,4 +63,16 @@ uint8_t Matrix_::getStringWidth(const uint8_t fontSize, const char* s)
     return w;
 }
 
+uint8_t Matrix_::getStringWidth(const uint8_t fontSize, String s)
+{
+    uint8_t w = 0;
+    for (uint8_t i=0; i<s.length(); i++) {
+        w += getCharacterWidth(fontSize, s[i]);
+        w += getGutterWidth(fontSize);
+    }
+    if (w > 0) 
+        w -= getGutterWidth(fontSize);
+    return w;
+}
+
 
