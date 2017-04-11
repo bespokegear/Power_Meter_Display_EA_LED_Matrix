@@ -1,6 +1,7 @@
-#include "Matrix.h"
-#include "ClearMode.h"
 #include <stdio.h>
+#include "Matrix.h"
+#include "Config.h"
+#include "ClearMode.h"
 
 Matrix_ Matrix;
 
@@ -76,6 +77,11 @@ uint8_t Matrix_::getStringWidth(const uint8_t fontSize, String s)
 }
 
 void Matrix_::rtext(uns8 color, uns16 x, uns16 y, const char* s)
+{
+    text(color, x-getStringWidth(_currentFont, s)+1, y, s);
+}
+
+void Matrix_::rtext(uns8 color, uns16 x, uns16 y, String s)
 {
     text(color, x-getStringWidth(_currentFont, s)+1, y, s);
 }

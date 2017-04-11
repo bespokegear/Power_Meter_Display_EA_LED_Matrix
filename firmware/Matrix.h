@@ -35,7 +35,7 @@ public:
 
     // right justified text
 	void rtext(uns8 color, uns16 x, uns16 y, const char* s);
-	// void rtext(uns8 color, uns16 x, uns16 y, String text);
+	void rtext(uns8 color, uns16 x, uns16 y, String text);
 
 private:
     DisplayMode* mode;

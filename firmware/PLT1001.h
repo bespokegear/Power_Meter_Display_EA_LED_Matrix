@@ -92,8 +92,11 @@ THE POSSIBILITY OF SUCH DAMAGE.
 class PLT1001 {
 private:
 	SoftwareSerial *_mySerial;
+
+protected:
 	uns8			_currentFont;
-	
+
+private:
 	void	command(uns8 i2c_cmd, String s, uns8 param);
 	void	command(uns8 i2c_cmd, String s, uns8 param_clr, uns16 param_x, uns16 param_y, int param_rad = -1);
 	void	command(uns8 i2c_cmd, String s, uns8 param_clr, uns16 param_x1, uns16 param_y1, uns16 param_x2, uns16 param_y2);
