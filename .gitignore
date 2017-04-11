@@ -3,6 +3,7 @@ tmp
 TODO
 *~
 .*~
+.~*#
 .*swp
 **/build-*
 **/*.pyc
