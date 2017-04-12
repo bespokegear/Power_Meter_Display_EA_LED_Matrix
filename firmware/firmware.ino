@@ -16,11 +16,10 @@ Heartbeat heartbeat(HEARTBEAT_PIN);
 void setup() {
 	Serial.begin(115200);
     heartbeat.begin();
-    Matrix.begin(&softSerial);
+    // Parser should be initialize before Matrix so that when Matrix
+    // Enters DumpConfigMode, Parser wil already know it's ID
     Parser.begin();
-    Serial.print(F("Max Graph Power: "));
-    Serial.println(MaxPowerWatts.get());
-    delay(100);
+    Matrix.begin(&softSerial);
     DBLN(F("setup:E"));
 }
 

@@ -4,7 +4,7 @@
 #include "DisplayMode.h"
 
 #define RIDCP_BUFFER_LEN    80
-#define RIDCP_MAX_IDS       10
+#define RIDCP_MAX_IDS       11
 
 enum RIDisplayCommand {
     None,
@@ -17,7 +17,8 @@ enum RIDisplayCommand {
     Clear,
     String,
     Text,
-    SetID
+    SetID,
+    DumpConfig
 };
 
 typedef void (*Callback)(const char*);
@@ -49,6 +50,7 @@ public:
     bool complete();
     void reset();
     void setID(uint8_t id0, uint8_t id1);
+    void dumpID();
 
 private:
     RIDisplayCommandMapper _mapper;

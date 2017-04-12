@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "Matrix.h"
 #include "Config.h"
-#include "ClearMode.h"
+#include "DumpConfigMode.h"
 
 Matrix_ Matrix;
 
@@ -13,13 +13,15 @@ Matrix_::Matrix_()
 void Matrix_::begin(SoftwareSerial* ss, unsigned long baud)
 {
     PLT1001::begin(ss, baud);
-    startMode(&ClearMode);
+    startMode(&DumpConfigMode);
 }
 
 void Matrix_::startMode(DisplayMode* newMode, const char* data)
 {
     mode = newMode;
-    mode->start(data);
+    if (newMode != NULL) {
+        mode->start(data);
+    }
 }
 
 void Matrix_::update()

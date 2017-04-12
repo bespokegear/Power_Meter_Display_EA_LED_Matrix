@@ -13,6 +13,7 @@
 #include "PowerMode.h"
 #include "SetMaxPowerMode.h"
 #include "SetIDMode.h"
+#include "DumpConfigMode.h"
 #include "Settings.h"
 
 RIDisplayCommandParser Parser;
@@ -86,6 +87,7 @@ void RIDisplayCommandParser::begin()
     _mapper.add("WN", Winner,               1,  &WinnerMode);
     _mapper.add("CD", Countdown,            1,  &CountdownMode);
     _mapper.add("ID", SetID,                2,  &SetIDMode);
+    _mapper.add("DC", DumpConfig,           0,  &DumpConfigMode);
 
     // Make sure the buffer is reset
     reset();
@@ -218,6 +220,10 @@ void RIDisplayCommandParser::setID(uint8_t id0, uint8_t id1)
     _id1 = id1;
     if ((_id0 < 'A' || id0 > 'Z') && id0 != '*') _id0 = '*';
     if ((_id1 < 'A' || id1 > 'Z') && id1 != '*') _id1 = '*';
+}
+
+void RIDisplayCommandParser::dumpID()
+{
     Serial.print(F("Display ID is: "));
     Serial.print((char)_id0);
     Serial.println((char)_id1);
