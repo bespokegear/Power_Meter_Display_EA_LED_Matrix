@@ -78,18 +78,18 @@ void RIDisplayCommandParser::begin()
     // we can expect Serial to be initialized for debugging
     // output...
     setID(DisplayID0.get(), DisplayID1.get());
-    _mapper.add("P",  Power,                5,  &PowerMode);
-    _mapper.add("V",  VoltageAndCurrent,    8,  &SmallTextMode);
-    _mapper.add("TI", Timer,                4,  &TimerMode);
-    _mapper.add("CL", Clear,                0,  &ClearMode);
-    _mapper.add("MP", MaxGraphPower,        4,  &SetMaxPowerMode);
-    _mapper.add("ST", String,               RIDCP_BUFFER_LEN-6, &SmallTextMode);
-    _mapper.add("TE", Text,                 RIDCP_BUFFER_LEN-6, &TextMode);
-    _mapper.add("TC", TextControl,          2,  &TextControlMode);
-    _mapper.add("WN", Winner,               1,  &WinnerMode);
     _mapper.add("CD", Countdown,            1,  &CountdownMode);
-    _mapper.add("ID", SetID,                2,  &SetIDMode);
+    _mapper.add("CL", Clear,                0,  &ClearMode);
     _mapper.add("DC", DumpConfig,           0,  &DumpConfigMode);
+    _mapper.add("ID", SetID,                2,  &SetIDMode);
+    _mapper.add("MP", MaxGraphPower,        4,  &SetMaxPowerMode);
+    _mapper.add("P",  Power,                5,  &PowerMode);
+    _mapper.add("ST", String,               RIDCP_BUFFER_LEN-6, &SmallTextMode);
+    _mapper.add("TC", TextControl,          2,  &TextControlMode);
+    _mapper.add("TE", Text,                 RIDCP_BUFFER_LEN-6, &TextMode);
+    _mapper.add("TI", Timer,                4,  &TimerMode);
+    _mapper.add("V",  VoltageAndCurrent,    8,  &SmallTextMode);
+    _mapper.add("WN", Winner,               1,  &WinnerMode);
 
     // Make sure the buffer is reset
     reset();
