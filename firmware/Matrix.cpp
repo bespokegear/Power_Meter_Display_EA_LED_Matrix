@@ -89,3 +89,13 @@ void Matrix_::rtext(uns8 color, uns16 x, uns16 y, String s)
     text(color, x-getStringWidth(_currentFont, s)+1, y, s);
 }
 
+void Matrix_::ctext(uns8 color, uns16 x, uns16 y, const char* s)
+{
+    text(color, x-(getStringWidth(_currentFont, s)/2)+1, y, s);
+}
+
+void Matrix_::ctext(uns8 color, uns16 x, uns16 y, String s)
+{
+    text(color, x-(getStringWidth(_currentFont, s)/2)+1, y, s);
+}
+

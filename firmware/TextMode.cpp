@@ -76,6 +76,9 @@ void TextMode_::start(const char* data)
         case 'R':
             Matrix.rtext(_color, MATRIX_SIZE_X-1, ypos, lineText[i]);
             break;
+        case 'C':
+            Matrix.ctext(_color, MATRIX_SIZE_X/2, ypos, lineText[i]);
+            break;
         default:
             Matrix.text(_color, 0, ypos, lineText[i]);
             break;

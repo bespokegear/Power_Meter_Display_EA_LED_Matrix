@@ -33,9 +33,22 @@ public:
     uint8_t getStringWidth(const uint8_t, const char* s);
     uint8_t getStringWidth(const uint8_t, String s);
 
-    // right justified text
+    //! Right justified text
+    //! \param color text color
+    //! \param x right-most x-pixel of text
+    //! \param y bottom-most pixel of text
+    //! \param s string to be printed. Note '|' or '\r' or '\n' embedded
+    //!          in a s will force a new-line to be started at that point
 	void rtext(uns8 color, uns16 x, uns16 y, const char* s);
 	void rtext(uns8 color, uns16 x, uns16 y, String text);
+    //! Center justified text
+    //! \param color text color
+    //! \param x center x-pixel of text
+    //! \param y bottom-most pixel of font
+    //! \param s string to be printed. Note '|' or '\r' or '\n' embedded
+    //!          in a s will force a new-line to be started at that point
+	void ctext(uns8 color, uns16 x, uns16 y, const char* s);
+	void ctext(uns8 color, uns16 x, uns16 y, String text);
 
 private:
     DisplayMode* mode;
