@@ -4,7 +4,7 @@
 #include "DisplayMode.h"
 
 #define RIDCP_BUFFER_LEN    80
-#define RIDCP_MAX_IDS       11
+#define RIDCP_MAX_IDS       12
 
 enum RIDisplayCommand {
     None,
@@ -17,6 +17,7 @@ enum RIDisplayCommand {
     Clear,
     String,
     Text,
+    TextControl,
     SetID,
     DumpConfig
 };

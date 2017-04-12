@@ -107,6 +107,10 @@ void TextMode_::setJustify(char j)
 
 void TextMode_::setColor(uint8_t c)
 {
+    if (c != MATRIX_RED && c != MATRIX_GREEN && c != MATRIX_ORANGE) {
+        DB(F("TextMode::setColor bad c "));
+        DBLN(c);
+    }
     _color = c;
 }
 
