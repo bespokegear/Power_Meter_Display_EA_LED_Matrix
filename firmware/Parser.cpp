@@ -10,6 +10,7 @@
 #include "ClearMode.h"
 #include "CountdownMode.h"
 #include "TimerMode.h"
+#include "VoltageAndCurrentMode.h"
 #include "WinnerMode.h"
 #include "PowerMode.h"
 #include "SetMaxPowerMode.h"
@@ -88,7 +89,7 @@ void RIDisplayCommandParser::begin()
     _mapper.add("TC", TextControl,          2,  &TextControlMode);
     _mapper.add("TE", Text,                 RIDCP_BUFFER_LEN-6, &TextMode);
     _mapper.add("TI", Timer,                4,  &TimerMode);
-    _mapper.add("V",  VoltageAndCurrent,    8,  &SmallTextMode);
+    _mapper.add("V",  VoltageAndCurrent,    8,  &VoltageAndCurrentMode);
     _mapper.add("WN", Winner,               1,  &WinnerMode);
 
     // Make sure the buffer is reset
