@@ -20,7 +20,7 @@ Commands are ASCII strings with the following structure:
 A command is processed as soon as it is complete. Completeness is determined by whichever of these conditions is true first:
 
 * The command parsing buffer is filled
-* An ASCII line feed ("\n") or carriage return ("\r") is received
+* An ASCII line feed ("\\n") or carriage return ("\\r") is received
 * The selected command's expected parameter length has been received. e.g. the "CD" command expects a single byte parameter, once this is read, the command will be triggered.
 
 Command Examples
@@ -36,9 +36,8 @@ Command Examples
 
 .. code::
 
-   aZATEWell if this isn't nice, I don't know what is\n
+   aZATEWell if this isn't nice I don't know what is
 
-* Note: the "\n" in this example means a literal line feed character - ASCII LF
 * Command intended for display unit with ID == "ZA" (or wildcard)
 * Command is "TE" - Text
 * Command parameter is "Well if this isn't nice, I don't know what is"
