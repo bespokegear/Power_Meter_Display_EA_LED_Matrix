@@ -1,0 +1,167 @@
+#!/usr/bin/env python3
+
+import serial
+import sys
+import os
+import time
+import select
+from time import sleep
+
+# globals
+global S
+S = None
+
+# List of tuples [ (command, delay), (command, delay), ... ]
+# which will be cycled through.  The delay is the number of seconds
+# after issuing the command from the tuple before moving on to the
+# next command.
+
+TEST_COMMANDS = [
+    ('aAACL',   0.01),
+    ('aAATCF4', 0.01),                  # Font 3 (small)
+    ('aAATCJC', 0.01),                  # Justify centre
+    ('aAATCCG', 0.01),                  # Green
+
+   
+    ('aAATEText Test', 1.5),
+    ('aAATCF4', 0.01),
+    ('aAATCJL', 0.01),
+    ('aAATELeft Justify', 1.5),
+    ('aAATCJC', 0.01),
+    ('aAATECentre Justify', 1.5),
+    ('aAATCJR', 0.01),
+    ('aAATERight Justify', 1.5),
+    ('aAATCJC', 0.01),
+    ('aAATCCR', 0.01),
+    ('aAATERed Text', 1.5),
+    ('aAATCCO', 0.01),
+    ('aAATEOrange Text', 1.5),
+    ('aAATCCG', 0.01),
+    ('aAATEGreen Text', 1.5),
+
+    ('aAATECountdown Test', 1.5),
+    ('aAACD3', 1),                      # Countdown 3
+    ('aAACD2', 1),                      # Countdown 2
+    ('aAACD1', 1),                      # Countdown 1
+    ('aAACD0', 1),                      # Countdown GO!
+
+    ('aAATEWinner Test', 1.5),
+    ('aAAWN1', 1),                      # Player 1
+    ('aAAWN2', 1),                      # Player 2
+    ('aAAWN0', 1),                      # TIE!
+
+    ('aAATEClear Test|3', 1),             
+    ('aAATEClear Test|2', 1),             
+    ('aAATEClear Test|1', 1),             
+    ('aAACL', 1),                       # Clear
+
+    ('aAATETimer Test', 1.5),
+    ('aAATI100', 0.1),
+    ('aAATI999', 0.1),
+    ('aAATI998', 0.1),
+    ('aAATI997', 0.1),
+    ('aAATI996', 0.1),
+    ('aAATI995', 0.1),
+    ('aAATI994', 0.1),
+    ('aAATI993', 0.1),
+    ('aAATI992', 0.1),
+    ('aAATI991', 0.1),
+    ('aAATI990', 0.1),
+    ('aAATI989', 0.1),
+    ('aAATI988', 0.1),
+    ('aAATI987', 0.1),
+    ('aAATI986', 0.1),
+    ('aAATI985', 0.1),
+    ('aAATI984', 0.1),
+    ('aAATI983', 0.1),
+    ('aAATI982', 0.1),
+    ('aAATI981', 0.1),
+    ('aAATI980', 0.1),
+    ('aAATI970', 0.1),
+    ('aAATI960', 0.1),
+    ('aAATI950', 0.1),
+    ('aAATI940', 0.1),
+    ('aAATI930', 0.1),
+    ('aAATI920', 0.1),
+    ('aAATI910', 0.1),
+    ('aAATI900', 0.1),
+    ('aAATI800', 0.1),
+    ('aAATI700', 0.1),
+    ('aAATI600', 0.1),
+    ('aAATI500', 0.1),
+    ('aAATI400', 0.1),
+    ('aAATI300', 0.1),
+    ('aAATI200', 0.1),
+    ('aAATI100', 0.1),
+    ('aAATI000', 0.1),
+
+    ('aAATEPower Test', 1.5),
+    ('aAAMP500',  1),
+    ('aAAP00500', 1),
+    ('aAAP00000', 2),
+    ('aAAP01000', 1),
+    ('aAAP01500', 3),
+    ('aAAP02000', 1),
+    ('aAAP01000', 1),
+    ('aAAP02000', 1),
+    ('aAAP03000', 1),
+    ('aAAP04000', 1),
+    ('aAAP05000', 1),
+    ('aAAP04000', 1),
+    ('aAAP03000', 1),
+    ('aAAP02000', 1),
+    ('aAAP01000', 1),
+    ('aAAP00000', 70),
+
+    ('aAATCF1', 0.01),
+    ('aAATCJL', 0.01),
+    ('aAATEFont 1 wrapped text test one two three four', 1.5),
+    ('aAATCF2', 0.01),
+    ('aAATEFont 2 wrapped text test one two three four', 1.5),
+    ('aAATCF3', 0.01),
+    ('aAATEFont 3 wrapped text test one two three four', 1.5),
+    ('aAATCF4', 0.01),
+    ('aAATEFont 4 wrapped text test one two three four', 1.5),
+    ('aAATCF5', 0.01),
+    ('aAATEFont 5 wrapped text test one two three four', 1.5),
+    ('aAATCF6', 0.01),
+    ('aAATEFont 6 wrapped text test one two three four', 1.5),
+    ('aAATCF7', 0.01),
+    ('aAATEFont 7 wrapped text test one two three four', 1.5)
+
+]
+
+def main(args):
+    global S
+    S = serial.Serial(args.serial_device, timeout=5)
+    S.baudrate = args.baud
+    sleep(2)        # wait for device to wake up / serial to init
+    while True:
+        run_tests()
+
+def run_tests():
+    for (command, delay) in TEST_COMMANDS:
+        execute_command(command, delay)
+
+def execute_command(command,delay):
+    global S
+    print("excuting command \"%s\", (wait %.2fs)" % (command, delay))
+    S.write(("%s\n" % command).encode())
+    sleep(delay)
+
+def guess_device():
+    for d in ['USB0', 'USB1', 'USB2', 'ACM0', 'ACM1', 'ACM2']:
+        p = '/dev/tty' + d
+        if os.path.exists('/dev/tty' + d):
+            return p
+    return None
+    
+if __name__ == '__main__':
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Serial Dump')
+    parser.add_argument('-D', '--serial-device', dest='serial_device', default=guess_device(), help='over-ride guessed serial device')
+    parser.add_argument('-b', '--baud', type=int, dest='baud', default=115200, help='specify baud rate other than 115200')
+    args = parser.parse_args()
+    main(args)
+
