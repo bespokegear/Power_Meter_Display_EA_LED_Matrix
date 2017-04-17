@@ -175,9 +175,9 @@ With values extracted from the parameter as follows:
 Winner
 ^^^^^^
 
-* Command ID: "WI"
+* Command ID: "WN"
 * Parameter: One digit being the player/team number which has won. Use "0" for a tie
-* Example: "aAAWI0"
+* Example: "aAAWN0"
 
 This command displays:
 
