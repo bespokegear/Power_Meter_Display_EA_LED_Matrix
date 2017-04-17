@@ -27,6 +27,7 @@ Command Examples
 ----------------
 
 .. code::
+
    aAACD2
 
 * Command intended for display unit with ID == "AA" (or wildcard)
@@ -34,6 +35,7 @@ Command Examples
 * Command parameter is "2"
 
 .. code::
+
    aZATEWell if this isn't nice, I don't know what is\n
 
 * Note: the "\n" in this example means a literal line feed character - ASCII LF
@@ -49,6 +51,7 @@ Countdown
 
 * Command ID: "CD"
 * Parameter: single character, value "0" to "9"
+* Example: "aAACD2"
 
 Animates a growing rectangle on the display. When the rectangle fills the display (after a little less than a second), the digit passed in the parameter is displayed in the center of the display. If that digit is "0", "GO!" is displayed instead of "0".
 
@@ -61,6 +64,7 @@ Clear
 
 * Command ID: "CL"
 * Parameter: None
+* Example: "aAACL"
 
 Clears the display.
 
@@ -69,10 +73,12 @@ Dump Configuration
 
 * Command ID: "DC"
 * Parameter: None
+* Example: "aAADC"
 
 Dumps the configuration of the unit onto serial, e.g.
 
 .. code::
+
     Display ID is: **
     Max Graph Power: 400
 
@@ -81,6 +87,7 @@ Set Maximum Power
 
 * Command ID: "MP"
 * Parameter: Four digit maximum power in Watts, e.g. "1000"
+* Example: "aAAMP1000"
 
 Sets the maximum power value for the graph in power mode. The new value is stored in EEPROM to that it persists after the device is powered off.
 
@@ -89,16 +96,18 @@ Power
 
 * Command ID: "P"
 * Parameter: Five-digit number which is a value in tenths of a Watt, e.g. "12345", meaning 1234.5 Watts
+* Example: "aAAP12345"
 
 Displays the numeric value passed after conversion into watts (the non-whole part of the converted value is truncated).
 
-Also displays a graph in the background which scrolls along from right to left, showing a history of the power values which have been displayed in the last minute or so.
+Also displays a graph in the background which scrolls along from right to left, showing a history of the power values which have been displayed in the last minute or so. The graph's maximum value is set using the Set Maximum Power command, and stored in non-volatile EEPROM.  If the Power command is called with a value that exceeds the maximum value, the graph will simply be full height.
 
 Set ID
 ^^^^^^
 
 * Command ID: "ID"
 * Parameter: Two character ID. Each character can be an upper case ASCII letter (A-Z), or an asterisk.  e.g. "AD" or "**"
+* Example: "aAAIDBB"
 
 When received, this command tells the display unit to change it's ID.  The new ID is stored in EEPROM to that it persists after the device is powered off.
 
@@ -106,7 +115,8 @@ String
 ^^^^^^
 
 * Command ID: "ST"
-* Parameter: An ASII string, terminated by a line feed or carriage return character
+* Parameter: An ASCII string, terminated by a line feed or carriage return character
+* Example: "aAASTHello World"
 
 This command will display the specified string in font 2 on the display. The string will be left-justified and in orange. This command is now deprecated - the TE command should be used in future projects. It is supported to maintain compatibility with legacy projects.
 
@@ -115,6 +125,7 @@ Text
 
 * Command ID: "TE"
 * Parameter: An ASII string, terminated by a line feed or carriage return characterone
+* Example: "aAATEThis text will be word-wrapped"
 
 The Text command displays text on the display according to state set by the Text Control command below.  By default text is displayed in font 2, left justified and in orange, but these settings an be modified with the Text Control command.
 
@@ -124,7 +135,8 @@ Text Control
 ^^^^^^^^^^^^
 
 * Command ID: "TC"
-* Parameter: A two-charater config command
+* Parameter: A two-character config command
+* Example: "aAATCF4"
 
 This command is used to control state which is used by the Text command. Three values may be modified:
 
@@ -136,7 +148,8 @@ Timer
 ^^^^^
 
 * Command ID: "TI"
-* Parameter: four digit value in tenths of a second, e.g. "123" to mean 12.3 seconds
+* Parameter: four digit value in tenths of a second, e.g. "0123" to mean 12.3 seconds
+* Example: "aAATI0123"
 
 This command will display a numeric value in a large font in the center of the screen in red. This is used for countdown timers.
 
@@ -145,12 +158,36 @@ Voltage and Current
 
 * Command ID: "V"
 * Parameter: Three digit voltage value in tenths of a volt, followed by "I" followed by a four digit current value in 100's of milliamps, e.g. "123I4567", which means 12.3 Volts, 45.67 Amps.
+* Example: "aAAV123I4567"
+
+This command will display two rows of data:
+
+.. code::
+
+   xx.x volts
+   yy.y amps
+
+With values extracted from the parameter as follows:
+
+* The first three digits of the parameter are volts in tenths of a volt, i.e. "145" means 14.5 volts
+* The fourth character should be "I"
+* The fifth to eighth characters are current in 100s of millivolts, i.e. "0530" means 5.3 amps
 
 Winner
 ^^^^^^
 
-* Command ID: "DC"
-* Parameter: None
+* Command ID: "WI"
+* Parameter: One digit being the player/team number which has won. Use "0" for a tie
+* Example: "aAAWI0"
+
+This command displays:
+
+.. code::
+
+   Winner:
+      P
+
+...where P is the number of the player who has won a challenge, or "TIE!" if scores are tied.
 
 
 Building The Firmware
