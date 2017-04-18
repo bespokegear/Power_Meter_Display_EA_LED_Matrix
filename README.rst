@@ -195,7 +195,7 @@ Text Mode
 ---------
 
 * Vertical centrality is not pixel perfect
-* In some cases, too much text will cause an overflow, with text plotted outside the matrix area causing corruption of the state of the PLT1001 board, which may need a reset to function properly
+* Centre justify not equal padding on both sides
 
 Building The Firmware
 =====================

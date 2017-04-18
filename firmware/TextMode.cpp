@@ -25,13 +25,15 @@ void TextMode_::start(const char* data)
     Matrix.setFont(_fontSize);
 
     // But this actually depends on the font
-    uint8_t maxLines = Matrix.getCharacterHeight(MATRIX_SIZE_Y / (_fontSize+1));
+    uint8_t maxLines = MATRIX_SIZE_Y / (Matrix.getCharacterHeight(_fontSize)+1);
     uint8_t lines = 0;
     int8_t lastSpace = -1; // The last space character in the current line
+    DB("maxLines=");
+    DBLN(maxLines);
     for (uint8_t i=0; data[i]!=0; i++) {
         if (data[i] == '\r' || data[i] == '\n' || data[i] == '|') {  
             // explicit line break
-            if (lines == 4) {
+            if (lines >= maxLines-1) {
                 // if we're out of lines, stop adding more letters
                 break;
             } else {
@@ -42,7 +44,7 @@ void TextMode_::start(const char* data)
             }
         } else if (Matrix.getStringWidth(_fontSize, lineText[lines]) + Matrix.getCharacterWidth(_fontSize, data[i]) >= MATRIX_SIZE_X) {
             // word wrap
-            if (lines == 4) {
+            if (lines >= maxLines-1) {
                 // if we're out of lines, stop adding more letters
                 break;
             }
@@ -69,7 +71,7 @@ void TextMode_::start(const char* data)
 
     // Work out where to put it
     uint8_t ysize = lines * (1 + Matrix.getCharacterHeight(_fontSize));
-    uint8_t ybottom = MATRIX_SIZE_Y - ((MATRIX_SIZE_Y - ysize)/2);
+    uint8_t ybottom = MATRIX_SIZE_Y - ((MATRIX_SIZE_Y - ysize)/2)-2;
     for (uint8_t i = 0; i<lines; i++) {
         uint8_t ypos = ybottom - ((1 + Matrix.getCharacterHeight(_fontSize))*(lines-i-1));
         switch(_justify) {
