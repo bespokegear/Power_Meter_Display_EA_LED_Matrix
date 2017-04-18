@@ -12,22 +12,22 @@ void SmallTextMode_::start(const char* data)
     String line[3];
     uint8_t lineCount = 1;
     for (uint8_t i=0; i<strlen(data); i++) {
-        DB("in: ");
+        DB(F("in: "));
         DB(data[i]);
-        DB(" (int)");
+        DB(F(" (int)"));
         DBLN((int)data[i]);
         if ((data[i] == '\r' || data[i] == '\n' || data[i] == '|') && lineCount<3) {
-            DBLN("newline");
+            DBLN(F("newline"));
             lineCount++;
             continue;
         }
-        DB("append:");
+        DB(F("append:"));
         DB(data[i]);
-        DB(" (int)");
+        DB(F(" (int)"));
         DBLN((int)data[i]);
         line[lineCount-1] += data[i];
     }
-    DB("lines=");
+    DB(F("lines="));
     DBLN(lineCount);
     for (uint8_t i=0; i<lineCount; i++) {
         DB(i);
