@@ -188,15 +188,6 @@ This command displays:
 
 ...where P is the number of the player who has won a challenge, or "TIE!" if scores are tied.
 
-Known Issues
-============
-
-Text Mode
----------
-
-* Vertical centrality is not pixel perfect
-* Centre justify not equal padding on both sides
-
 Building The Firmware
 =====================
 
