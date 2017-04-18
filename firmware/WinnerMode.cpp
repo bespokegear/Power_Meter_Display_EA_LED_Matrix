@@ -1,6 +1,7 @@
 #include <MutilaDebug.h>
 #include "WinnerMode.h"
 #include "Matrix.h"
+#include "Config.h"
 
 WinnerMode_ WinnerMode;
 
@@ -24,15 +25,15 @@ void WinnerMode_::start(const char* data)
     Matrix.pixel(MATRIX_RED, 49, 7);
     
     // draw who is the winner in big text
-    Matrix.setFont(5);
+    Matrix.setFont(6);
     switch(data[0]) {
     case '0':
-        Matrix.text(MATRIX_ORANGE, 16, 27, "TIE!");
+        Matrix.ctext(MATRIX_ORANGE, (MATRIX_SIZE_X/2)-2, 27, "TIE!");
         break;
     case '1':
-        Matrix.text(MATRIX_ORANGE, 29, 27, String(data[0]));
+        Matrix.ctext(MATRIX_ORANGE, (MATRIX_SIZE_X/2)-2, 27, String(data[0]));
     case '2':
-        Matrix.text(MATRIX_ORANGE, 27, 27, String(data[0]));
+        Matrix.ctext(MATRIX_ORANGE, (MATRIX_SIZE_X/2)-2, 27, String(data[0]));
         break;
     default:
         DB(F("CountdownMode ERR bad param: "));
