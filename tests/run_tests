@@ -37,6 +37,23 @@ TEST_COMMANDS = [
     ('aAATEOrange Text', 1.5),
     ('aAATCCG', 0.01),
     ('aAATEGreen Text', 1.5),
+    
+    ('aAATCF1', 0.01),
+    ('aAATCJL', 0.01),
+    ('aAATEFont 1 wrapped text test one two three four', 1.5),
+    ('aAATCF2', 0.01),
+    ('aAATEFont 2 wrapped text test one two three four', 1.5),
+    ('aAATCF3', 0.01),
+    ('aAATEFont 3 wrapped text test one two three four', 1.5),
+    ('aAATCF4', 0.01),
+    ('aAATEFont 4 wrapped text test one two three four', 1.5),
+    ('aAATCF5', 0.01),
+    ('aAATEFont 5 wrapped text test one two three four', 1.5),
+    ('aAATCF6', 0.01),
+    ('aAATEFont 6 wrapped text test one two three four', 1.5),
+    ('aAATCF7', 0.01),
+    ('aAATEFont 7 wrapped text test one two three four', 1.5),
+
 
     ('aAATECountdown Test', 1.5),
     ('aAACD3', 1),                      # Countdown 3
@@ -110,25 +127,7 @@ TEST_COMMANDS = [
     ('aAAP03000', 1),
     ('aAAP02000', 1),
     ('aAAP01000', 1),
-    ('aAAP00000', 70),
-
-    
-    ('aAATCF1', 0.01),
-    ('aAATCJL', 0.01),
-    ('aAATEFont 1 wrapped text test one two three four', 1.5),
-    ('aAATCF2', 0.01),
-    ('aAATEFont 2 wrapped text test one two three four', 1.5),
-    ('aAATCF3', 0.01),
-    ('aAATEFont 3 wrapped text test one two three four', 1.5),
-    ('aAATCF4', 0.01),
-    ('aAATEFont 4 wrapped text test one two three four', 1.5),
-    ('aAATCF5', 0.01),
-    ('aAATEFont 5 wrapped text test one two three four', 1.5),
-    ('aAATCF6', 0.01),
-    ('aAATEFont 6 wrapped text test one two three four', 1.5),
-    ('aAATCF7', 0.01),
-    ('aAATEFont 7 wrapped text test one two three four', 1.5)
-
+    ('aAAP00000', 70)
 ]
 
 def main(args):
@@ -140,10 +139,10 @@ def main(args):
         run_tests()
 
 def run_tests():
-    run_character_wrap_test()
     for (command, delay) in TEST_COMMANDS:
         execute_command(command, delay)
     run_font_width_test()
+    run_character_wrap_test()
 
 def execute_command(command,delay):
     global S
