@@ -22,7 +22,6 @@ TEST_COMMANDS = [
     ('aAATCJC', 0.01),                  # Justify centre
     ('aAATCCG', 0.01),                  # Green
 
-   
     ('aAATEText Test', 1.5),
     ('aAATCF4', 0.01),
     ('aAATCJL', 0.01),
@@ -113,6 +112,7 @@ TEST_COMMANDS = [
     ('aAAP01000', 1),
     ('aAAP00000', 70),
 
+    
     ('aAATCF1', 0.01),
     ('aAATCJL', 0.01),
     ('aAATEFont 1 wrapped text test one two three four', 1.5),
@@ -142,6 +142,7 @@ def main(args):
 def run_tests():
     for (command, delay) in TEST_COMMANDS:
         execute_command(command, delay)
+    run_font_width_test()
 
 def execute_command(command,delay):
     global S
@@ -149,6 +150,19 @@ def execute_command(command,delay):
     S.write(("%s\n" % command).encode())
     sleep(delay)
 
+def run_font_width_test():
+    # Right justify and set font color to soothing green
+    execute_command('aAATCJR', 0.01)
+    execute_command('aAATCCG', 0.01)
+    
+    for font in range(1, 8):
+        execute_command('aAATCF%d' % font, 0.01)
+        for c in range(33, 127):
+            if (font < 4):
+                execute_command('aAATEf%d %d|%s' % (font, c, chr(c)*4), 0.75)
+            else:
+                execute_command('aAATE%d %s' % (font, chr(c)*2), 0.75)
+   
 def guess_device():
     for d in ['USB0', 'USB1', 'USB2', 'ACM0', 'ACM1', 'ACM2']:
         p = '/dev/tty' + d
