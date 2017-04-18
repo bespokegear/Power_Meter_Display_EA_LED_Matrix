@@ -28,7 +28,7 @@ void TextMode_::start(const char* data)
     uint8_t maxLines = MATRIX_SIZE_Y / (Matrix.getCharacterHeight(_fontSize)+1);
     uint8_t lines = 0;
     int8_t lastSpace = -1; // The last space character in the current line
-    DB("maxLines=");
+    DB(F("maxLines="));
     DBLN(maxLines);
     for (uint8_t i=0; data[i]!=0; i++) {
         if (data[i] == '\r' || data[i] == '\n' || data[i] == '|') {  
@@ -61,9 +61,9 @@ void TextMode_::start(const char* data)
         lineText[lines] += data[i];
         if (data[i] == ' ') {
             lastSpace = lineText[lines].length() - 1;
-            DB("Current line=\"");
+            DB(F("Current line=\""));
             DB(lineText[lines]);
-            DB("\" lastSpace idx=");
+            DB(F("\" lastSpace idx="));
             DBLN(lastSpace);
         }
     }
@@ -79,7 +79,7 @@ void TextMode_::start(const char* data)
             Matrix.rtext(_color, MATRIX_SIZE_X-1, ypos, lineText[i]);
             break;
         case 'C':
-            Matrix.ctext(_color, MATRIX_SIZE_X/2, ypos, lineText[i]);
+            Matrix.ctext(_color, (MATRIX_SIZE_X/2)-1, ypos, lineText[i]);
             break;
         default:
             Matrix.text(_color, 0, ypos, lineText[i]);
