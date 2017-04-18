@@ -188,6 +188,14 @@ This command displays:
 
 ...where P is the number of the player who has won a challenge, or "TIE!" if scores are tied.
 
+Known Issues
+============
+
+Text Mode
+---------
+
+* Vertical centrality is not pixel perfect
+* In some cases, too much text will cause an overflow, with text plotted outside the matrix area causing corruption of the state of the PLT1001 board, which may need a reset to function properly
 
 Building The Firmware
 =====================
