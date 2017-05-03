@@ -101,6 +101,16 @@ TEST_COMMANDS = [
 
     ('aAATCF4', 0.01),
     ('aAATCJC', 0.01),
+    ('aAATEVolt/Amp Test', 1),
+    ('aAAV120I0500', 0.5),
+    ('aAAV111I0610', 0.5),
+    ('aAAV102I0720', 0.5),
+    ('aAAV093I0830', 0.5),
+    ('aAAV084I1550', 0.5),
+    ('aAAV075I2560', 0.5),
+
+    ('aAATCF4', 0.01),
+    ('aAATCJC', 0.01),
     ('aAATEClear Test|3', 1),             
     ('aAATEClear Test|2', 1),             
     ('aAATEClear Test|1', 1),             
@@ -180,8 +190,8 @@ def main(args):
 def run_tests():
     for (command, delay) in TEST_COMMANDS:
         execute_command(command, delay)
-    run_character_wrap_test()
     run_font_width_test()
+    run_character_wrap_test()
 
 def execute_command(command,delay):
     global S
@@ -198,9 +208,9 @@ def run_font_width_test():
         execute_command('aAATCF%d' % font, 0.01)
         for c in range(33, 127):
             if (font < 4):
-                execute_command('aAATEf%d %d|%s' % (font, c, chr(c)*4), 0.4)
+                execute_command('aAATEf%d %d|%s' % (font, c, chr(c)*4), 0.15)
             else:
-                execute_command('aAATE%d %s' % (font, chr(c)*2), 0.4)
+                execute_command('aAATE%d %s' % (font, chr(c)*2), 0.15)
 
 def run_character_wrap_test():
     execute_command('aAATCJL', 0.01)
