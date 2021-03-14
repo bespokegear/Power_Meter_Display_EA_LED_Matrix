@@ -9,6 +9,7 @@
 enum RIDisplayCommand {
     None,
     Power,
+    MultiPower,
     VoltageAndCurrent,
     MaxGraphPower,
     Timer,
@@ -67,4 +68,3 @@ private:
 };
 
 extern RIDisplayCommandParser Parser;
-

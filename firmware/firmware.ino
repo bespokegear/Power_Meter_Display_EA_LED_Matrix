@@ -14,7 +14,7 @@ SoftwareSerial softSerial(SW_SERIAL_RX, SW_SERIAL_TX);
 Heartbeat heartbeat(HEARTBEAT_PIN);
 
 void setup() {
-    Serial.begin(115200);
+    Serial.begin(SERIAL_BAUD);
     heartbeat.begin();
     // Parser should be initialize before Matrix so that when Matrix
     // Enters DumpConfigMode, Parser wil already know it's ID
@@ -28,6 +28,3 @@ void loop () {
     Matrix.update();
     Parser.update();
 }
-
-
-

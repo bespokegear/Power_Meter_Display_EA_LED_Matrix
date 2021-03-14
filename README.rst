@@ -101,6 +101,18 @@ Displays the numeric value passed after conversion into watts (the non-whole par
 
 Also displays a graph in the background which scrolls along from right to left, showing a history of the power values which have been displayed in the last minute or so. The graph's maximum value is set using the Set Maximum Power command, and stored in non-volatile EEPROM.  If the Power command is called with a value that exceeds the maximum value, the graph will simply be full height.
 
+Multiple Power
+^^^^^^^^^^^^^^
+
+* Command ID: "MM"
+* Parameter: Four x Five-digit number each is a value in tenths of a Watt, e.g. "12345", meaning 1234.5 Watts. With : seperators and # end
+* Example: "aAAMM12345:34567:78901:55555#"
+
+Displays the numeric value passed after conversion into watts (the non-whole part of the converted value is truncated).
+
+Also displays a graph in the background which scrolls along from right to left, showing a history of the power values which have been displayed in the last minute or so. The graph's maximum value is set using the Set Maximum Power command, and stored in non-volatile EEPROM.  If the Power command is called with a value that exceeds the maximum value, the graph will simply be full height.
+
+
 Set ID
 ^^^^^^
 

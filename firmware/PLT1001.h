@@ -112,7 +112,7 @@ public:
 	void	title();
 	void	paint();
 	void	clear();
-	
+	void  panels(int num_panels);
 	void	enableActiveHigh(bool en);
 	void	setFont(uns8 font);
 	void	setScrollspeed(uns8 speed);
