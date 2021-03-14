@@ -4,36 +4,36 @@
 #include "DisplayMode.h"
 
 #define RIDCP_BUFFER_LEN    80
-#define RIDCP_MAX_IDS       12
+#define RIDCP_MAX_IDS       13
 
 enum RIDisplayCommand {
-    None,
-    Power,
-    MultiPower,
-    VoltageAndCurrent,
-    MaxGraphPower,
-    Timer,
-    Countdown,
-    Winner,
-    Clear,
-    String,
-    Text,
-    TextControl,
-    SetID,
-    DumpConfig
+  None,
+  Power,
+  VoltageAndCurrent,
+  MaxGraphPower,
+  Timer,
+  Countdown,
+  Winner,
+  Clear,
+  String,
+  Text,
+  TextControl,
+  SetID,
+  DumpConfig,
+  MultiPower
 };
 
 typedef void (*Callback)(const char*);
 
 class RIDisplayCommandMapper {
-public:
+  public:
     RIDisplayCommandMapper();
     void add(const char* id, RIDisplayCommand cmd, uint8_t maxData, DisplayMode* mode);
     RIDisplayCommand getCmd(const char* id);
     uint8_t getMaxData(RIDisplayCommand cmd);
     DisplayMode* getMode(RIDisplayCommand cmd);
 
-private:
+  private:
     uint8_t _count;
     char _id[RIDCP_MAX_IDS][3];
     RIDisplayCommand _cmd[RIDCP_MAX_IDS];
@@ -43,7 +43,7 @@ private:
 };
 
 class RIDisplayCommandParser {
-public:
+  public:
     RIDisplayCommandParser();
     void begin();
     void update();
@@ -54,7 +54,7 @@ public:
     void setID(uint8_t id0, uint8_t id1);
     void dumpID();
 
-private:
+  private:
     RIDisplayCommandMapper _mapper;
     uint8_t _id0;
     uint8_t _id1;

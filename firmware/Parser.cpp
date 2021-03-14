@@ -86,7 +86,7 @@ void RIDisplayCommandParser::begin()
     _mapper.add("ID", SetID,                2,  &SetIDMode);
     _mapper.add("MP", MaxGraphPower,        4,  &SetMaxPowerMode);
     _mapper.add("P",  Power,                5,  &PowerMode);
-    _mapper.add("MM", MultiPower,           6,  &MultiPowerMode);
+    _mapper.add("MM", MultiPower,           19,  &MultiPowerMode);
     _mapper.add("ST", String,               RIDCP_BUFFER_LEN-6, &SmallTextMode);
     _mapper.add("TC", TextControl,          2,  &TextControlMode);
     _mapper.add("TE", Text,                 RIDCP_BUFFER_LEN-6, &TextMode);

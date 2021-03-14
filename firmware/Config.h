@@ -6,8 +6,19 @@
 #define SW_SERIAL_RX            12
 #define SW_SERIAL_TX            11
 
+// Button feel settings
+#define DEBOUNCED_BUTTON_THRESHOLD      5
+#define DEBOUNCED_BUTTON_DELAY          5
+#define DEBOUNCED_BUTTON_HELD_MS        300
+#define DEBOUNCED_BUTTON_RPT_INITIAL_MS 500
+#define DEBOUNCED_BUTTON_RPT_MS         300
+
+// Button parameters
+#define RESET_BUTTON_PIN                2
+
 #define CMD_TIMEOUT_MS          10000
-#define CMD_BUF_LEN             24
+#define CMD_BUF_LEN             32
+
 #define GRAPH_DATA_ITEMS        64
 #define GRAPH_PLOT_MS           1000
 #define VALUE_PLOT_MS           2000
