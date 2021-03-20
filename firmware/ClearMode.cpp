@@ -10,4 +10,3 @@ void ClearMode_::start(const char* data)
     Matrix.clear();
     Matrix.paint();
 }
-

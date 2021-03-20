@@ -16,16 +16,15 @@ void SetMaxPowerMode_::start(const char* data)
     uint16_t old = MaxPowerWatts.get();
     bool ok = MaxPowerWatts.set(s.toInt());
     Matrix.clear();
-    Matrix.text(MATRIX_ORANGE, 2, 12, "Max Power");
+    Matrix.text(MATRIX_ORANGE, 2+64, 12, "Max Power");
     if (ok) {
         MaxPowerWatts.save();
-        Matrix.text(MATRIX_ORANGE, 2, 24, s);
-        Matrix.text(MATRIX_ORANGE, 32, 24, "Watts");
+        Matrix.text(MATRIX_ORANGE, 2, 12, s);
+        Matrix.text(MATRIX_ORANGE, 32, 12, "Watts");
         PowerMode.reset();
     } else {
-        Matrix.text(MATRIX_ORANGE, 2, 24, "Error");
+        Matrix.text(MATRIX_ORANGE, 2, 12, "Error");
         MaxPowerWatts.set(old);
     }
     Matrix.paint();
 }
-

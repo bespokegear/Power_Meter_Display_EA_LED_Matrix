@@ -33,6 +33,11 @@ void Matrix_::update()
     }
 }
 
+void Matrix_::title()
+{
+  PLT1001::title();
+}
+
 uint8_t Matrix_::getCharacterHeight(const uint8_t fontSize)
 {
     if (fontSize < 1 || fontSize > 7) {

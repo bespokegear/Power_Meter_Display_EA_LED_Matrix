@@ -13,8 +13,8 @@ void TimerMode_::start(const char* data)
     const uint8_t fontSize = 5;
     const uint8_t oneWidth = 8;
     const uint8_t otherWidth = 10;
-    const uint8_t ypos = 23;
-    const uint8_t xpos = 40; // the position of the decimal point
+    const uint8_t ypos = 15;
+    const uint8_t xpos = 41; // the position of the decimal point
     
     String s = data;
     // strip trailing '-' characters
@@ -27,9 +27,10 @@ void TimerMode_::start(const char* data)
         wholePartWidth += (i%10==1) ? oneWidth : otherWidth;
         wholePartWidth++;
     }
-
-    Matrix.setFont(fontSize);
+    Matrix.setFont(4);
     Matrix.clear();
+    Matrix.text(MATRIX_RED, 84, 11, "TIME:");
+    Matrix.setFont(fontSize);
     // Write the whole part
     Matrix.text(MATRIX_RED, xpos - wholePartWidth, ypos, String(s.toInt()/10));
     // Draw the decimal point
@@ -38,4 +39,3 @@ void TimerMode_::start(const char* data)
     Matrix.text(MATRIX_RED, xpos+3, ypos, String(s.toInt()%10));
     Matrix.paint();
 }
-

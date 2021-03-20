@@ -25,7 +25,7 @@ public:
     void begin(SoftwareSerial* ss, unsigned long baud=115200);
     void startMode(DisplayMode* newMode, const char* data=NULL);
     void update();
-
+    void title();
     // Information about character sizes
     uint8_t getCharacterHeight(const uint8_t fontSize);
     uint8_t getCharacterWidth(const uint8_t fontSize, const char c);
@@ -147,5 +147,3 @@ const uint8_t CharacterWidth[] PROGMEM = {
 
 // a global object called Matrix
 extern Matrix_ Matrix;
-
-

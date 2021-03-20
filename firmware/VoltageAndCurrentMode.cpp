@@ -19,21 +19,19 @@ void VoltageAndCurrentMode_::start(const char* data)
 
     const uint8_t xpos = 17;
 
-
     if (isInteger(s.substring(0,3))) {
-        Matrix.rtext(MATRIX_RED,       xpos,    12, String(s.substring(0, 2).toInt()));
-        Matrix.rectangle(MATRIX_RED,   xpos+2,  12, 2, 2);
-        Matrix.text(MATRIX_RED,        xpos+5,  12, String(s.substring(2, 3).toInt()));
-        Matrix.text(MATRIX_RED,        xpos+15, 12, "Volts");
+        Matrix.rtext(MATRIX_RED,       xpos + 64,    12, String(s.substring(0, 2).toInt()));
+        Matrix.rectangle(MATRIX_RED,   xpos+2 + 64,  12, 2, 2);
+        Matrix.text(MATRIX_RED,        xpos+5 + 64,  12, String(s.substring(2, 3).toInt()));
+        Matrix.text(MATRIX_RED,        xpos+15 + 64, 12, "Volts");
     } 
 
     if (s[3] == 'I' && isInteger(s.substring(4))) {
-        Matrix.rtext(MATRIX_GREEN,     xpos,    26, String(s.substring(4, 6).toInt()));
-        Matrix.rectangle(MATRIX_GREEN, xpos+2,  26, 2, 2);
-        Matrix.text(MATRIX_GREEN,      xpos+5,  26, String(s.substring(6, 7).toInt()));
-        Matrix.text(MATRIX_GREEN,      xpos+15, 26, "Amps");
+        Matrix.rtext(MATRIX_GREEN,     xpos,    12, String(s.substring(4, 6).toInt()));
+        Matrix.rectangle(MATRIX_GREEN, xpos+2,  12, 2, 2);
+        Matrix.text(MATRIX_GREEN,      xpos+5,  12, String(s.substring(6, 7).toInt()));
+        Matrix.text(MATRIX_GREEN,      xpos+15, 12, "Amps");
     }
 
     Matrix.paint();
 }
-

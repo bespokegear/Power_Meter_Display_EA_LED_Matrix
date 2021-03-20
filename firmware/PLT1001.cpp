@@ -70,7 +70,7 @@ void PLT1001::clear() {
 
 void PLT1001::panels(uns8 _num_panels) {
   delay(PLT1001_DELAY);
-    _mySerial->print("panel ");
+    _mySerial->print("displays ");
     _mySerial->print(_num_panels);
     _mySerial->print("\r");
 }

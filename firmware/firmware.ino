@@ -11,6 +11,7 @@
 #include "Matrix.h"
 #include "Parser.h"
 #include "Settings.h"
+#include "ClearMode.h"
 
 SoftwareSerial softSerial(SW_SERIAL_RX, SW_SERIAL_TX);
 Heartbeat heartbeat(HEARTBEAT_PIN);
@@ -40,7 +41,8 @@ void loop () {
   if (ResetButton.pushed() == true)
   {
     //energyWs = 0;  // Reset the energy value
-    Serial.println("Pressed");
+    DBLN("Pressed");
+    Matrix.startMode(&ClearMode);
   }
 
   

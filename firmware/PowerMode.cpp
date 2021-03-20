@@ -76,12 +76,8 @@ void PowerMode_::drawValue()
 {
     Matrix.setFont(6);
     // Write the whole part
-    Matrix.rtext(MATRIX_GREEN, 50, 24, String(lastValue/10));
+    Matrix.rtext(MATRIX_GREEN, 50+64, 15, String(lastValue/10));
     // Write the fractional part (1 d.p.)
     Matrix.setFont(4);
-    Matrix.text(MATRIX_GREEN, 50+3, 21, "W");
+    Matrix.text(MATRIX_GREEN, 50+3+64, 15, "W");
 }
-
-
-
-
