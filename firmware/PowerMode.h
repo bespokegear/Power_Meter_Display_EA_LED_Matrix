@@ -21,21 +21,16 @@ protected:
     // Draw the value of the max power in this time period
     // and plot the graph underneith
     void draw();
-
     // Draw individual components
     void drawGraph();
     void drawValue();
-
     // Add a new value to the graph
     void updateGraph();
-
 private:
     unsigned long lastGraphUpdate; 
-    uint32_t lastValue;
-    uint32_t graphData[GRAPH_DATA_ITEMS];
+    uint16_t lastValue;
+    uint16_t graphData[GRAPH_DATA_ITEMS];
     uint8_t graphPos;
-
 };
 
 extern PowerMode_ PowerMode;
-

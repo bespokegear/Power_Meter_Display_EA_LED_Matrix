@@ -41,7 +41,7 @@ void loop () {
   if (ResetButton.pushed() == true)
   {
     //energyWs = 0;  // Reset the energy value
-    DBLN("Pressed");
+    DBLN(F("Pressed"));
     Matrix.startMode(&ClearMode);
   }
 

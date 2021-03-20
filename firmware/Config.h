@@ -20,6 +20,7 @@
 #define CMD_BUF_LEN             32
 
 #define GRAPH_DATA_ITEMS        64
+#define GRAPH_DATA_ITEMS_SM     32
 #define GRAPH_PLOT_MS           1000
 #define VALUE_PLOT_MS           2000
 #define GRAPH_MAX_WATT          400
