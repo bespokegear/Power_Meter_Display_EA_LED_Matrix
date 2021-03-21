@@ -16,7 +16,8 @@ public:
 
     // Clear the graph history and last value printed, and reset timers
     void reset();
-
+    
+    uint32_t lastEValue;
 protected:
     // Draw the value of the max power in this time period
     // and plot the graph underneith
@@ -28,7 +29,7 @@ protected:
     void updateGraph();
 private:
     unsigned long lastGraphUpdate; 
-    uint16_t lastValue;
+    uint16_t lastPValue;
     uint16_t graphData[GRAPH_DATA_ITEMS];
     uint8_t graphPos;
 };

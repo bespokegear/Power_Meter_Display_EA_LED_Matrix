@@ -12,6 +12,7 @@
 #include "Parser.h"
 #include "Settings.h"
 #include "ClearMode.h"
+#include "PowerMode.h"
 
 SoftwareSerial softSerial(SW_SERIAL_RX, SW_SERIAL_TX);
 Heartbeat heartbeat(HEARTBEAT_PIN);
@@ -42,8 +43,7 @@ void loop () {
   {
     //energyWs = 0;  // Reset the energy value
     DBLN(F("Pressed"));
+    PowerMode.lastEValue = 0;
     Matrix.startMode(&ClearMode);
   }
-
-  
 }

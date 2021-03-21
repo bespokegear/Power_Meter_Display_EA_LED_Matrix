@@ -29,5 +29,5 @@
 #define MATRIX_SIZE_Y           16
 #define LED_PANELS              2
 
-#define SERIAL_BAUD             9600
-#define DEBUG                   true
+#define SERIAL_BAUD             115200
+#define DEBUG                   false
