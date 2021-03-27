@@ -18,6 +18,12 @@ void Matrix_::begin(SoftwareSerial* ss, unsigned long baud)
     startMode(&DumpConfigMode);
 }
 
+void Matrix_::reset()
+{
+    PLT1001::enableActiveHigh(true);
+    PLT1001::panels(LED_PANELS);  
+}
+
 void Matrix_::startMode(DisplayMode* newMode, const char* data)
 {
     mode = newMode;

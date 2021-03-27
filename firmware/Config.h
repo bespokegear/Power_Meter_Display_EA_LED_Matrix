@@ -31,3 +31,6 @@
 
 #define SERIAL_BAUD             115200
 #define DEBUG                   false
+
+//#define SERIAL_BAUD             9600
+//#define DEBUG                   true

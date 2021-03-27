@@ -90,7 +90,7 @@ void RIDisplayCommandParser::begin()
     _mapper.add("ST", String,               RIDCP_BUFFER_LEN-6, &SmallTextMode);
     _mapper.add("TC", TextControl,          2,  &TextControlMode);
     _mapper.add("TE", Text,                 RIDCP_BUFFER_LEN-6, &TextMode);
-    _mapper.add("TI", Timer,                4,  &TimerMode);
+    _mapper.add("TI", Timer,                10,  &TimerMode);
     _mapper.add("V",  VoltageAndCurrent,    8,  &VoltageAndCurrentMode);
     _mapper.add("WN", Winner,               1,  &WinnerMode);
 

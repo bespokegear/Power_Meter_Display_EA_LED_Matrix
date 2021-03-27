@@ -23,6 +23,7 @@ class Matrix_ : public PLT1001 {
 public:
     Matrix_();
     void begin(SoftwareSerial* ss, unsigned long baud=115200);
+    void reset();
     void startMode(DisplayMode* newMode, const char* data=NULL);
     void update();
     void title();

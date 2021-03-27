@@ -16,7 +16,8 @@ void SmallTextMode_::start(const char* data)
     DB(data[i]);
     DB(F(" (int)"));
     DBLN((int)data[i]);
-    if ((data[i] == '\r' || data[i] == '\n' || data[i] == '|') && lineCount < 4) {
+
+    if ((data[i] == '\r' || data[i] == '\n' || data[i] == '|') && lineCount < 4 || data[i] == ' ' || data[i] == ' ') {
       DBLN(F("newline"));
       lineCount++;
       continue;
@@ -41,19 +42,19 @@ void SmallTextMode_::start(const char* data)
   for (uint8_t i = 0; i < lineCount; i++) {
     if (i == 0) {
       y = 6;
-      x = 72;
+      x = 66;
     }
     else if (i == 1) {
       y = 14;
-      x = 72;
+      x = 66;
     }
     else if (i == 2) {
       y = 6;
-      x = 8;
+      x = 2;
     }
     else {
       y = 14;
-      x = 8;
+      x = 2;
     };
     Matrix.text(MATRIX_ORANGE, x, y, line[i]);
   }

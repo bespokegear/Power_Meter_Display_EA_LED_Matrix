@@ -29,7 +29,6 @@ void setup() {
   Matrix.begin(&softSerial);
   // Initialize button objects
   ResetButton.begin();
-
   DBLN(F("setup:E"));
 }
 
