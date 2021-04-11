@@ -42,15 +42,18 @@ void PowerMode_::start(const char* data)
     switch (i)
     {
       case 0:
-        if (s_substring.toInt() > 0 && s_substring.toInt() < 20000) // Not less than 0 or more than 20000 (in 100's mW)...
+        if (s_substring.toInt() > 0 && s_substring.toInt() < 20000 ) // Not less than 0 or more than 20000 (in 100's mW)...
         {
           lastPValue = s_substring.toInt();
         }
         break;
       case 1:
-        if (s_substring.toInt() > 0 && s_substring.toInt() < 35996400 )   // Not less than 0 or more than 35996400 (J to Wh = /3600...
+        if (s_substring.length() > 2)   // Substring is divided by 3600 to give value. So up to 3600 will read 0. Must have more than 2 digits to be valid.
         {
-          lastEValue = s_substring.toInt();
+          if (s_substring.toInt() > 0 && s_substring.toInt() < 35996400)  // Not less than 0 or more than 35996400 (J to Wh = /3600...
+          {
+            lastEValue = s_substring.toInt();
+          }
         }
         break;
     }
