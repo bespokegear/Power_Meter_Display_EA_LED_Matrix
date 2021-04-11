@@ -68,6 +68,13 @@ void PLT1001::clear() {
     _mySerial->print("clear\r");
 }
 
+void PLT1001::panels(uns8 _num_panels) {
+  delay(PLT1001_DELAY);
+    _mySerial->print("displays ");
+    _mySerial->print(_num_panels);
+    _mySerial->print("\r");
+}
+
 void PLT1001::command(uns8 i2c_cmd, String s, uns8 param) {
     s += (String)param;
     s += "\r";

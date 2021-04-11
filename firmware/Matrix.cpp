@@ -13,7 +13,15 @@ Matrix_::Matrix_()
 void Matrix_::begin(SoftwareSerial* ss, unsigned long baud)
 {
     PLT1001::begin(ss, baud);
+    PLT1001::enableActiveHigh(true);
+    PLT1001::panels(LED_PANELS);  
     startMode(&DumpConfigMode);
+}
+
+void Matrix_::reset()
+{
+    PLT1001::enableActiveHigh(true);
+    PLT1001::panels(LED_PANELS);  
 }
 
 void Matrix_::startMode(DisplayMode* newMode, const char* data)
@@ -29,6 +37,11 @@ void Matrix_::update()
     if (mode != NULL) {
         mode->update();
     }
+}
+
+void Matrix_::title()
+{
+  PLT1001::title();
 }
 
 uint8_t Matrix_::getCharacterHeight(const uint8_t fontSize)
@@ -98,4 +111,3 @@ void Matrix_::ctext(uns8 color, uns16 x, uns16 y, String s)
 {
     text(color, x-(getStringWidth(_currentFont, s)/2)+1, y, s);
 }
-

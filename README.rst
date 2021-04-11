@@ -90,16 +90,31 @@ Set Maximum Power
 
 Sets the maximum power value for the graph in power mode. The new value is stored in EEPROM to that it persists after the device is powered off.
 
-Power
-^^^^^
+Power & Energy
+^^^^^^^^^^^^^^
 
-* Command ID: "P"
+* Command ID: "P" or "P1234E4567#"
 * Parameter: Five-digit number which is a value in tenths of a Watt, e.g. "12345", meaning 1234.5 Watts
-* Example: "aAAP12345"
+* Example: "aAAP12345#"	This just sends the power data
+* Example: "aAAP12345E325612375#"		This sends power and energy data. Energy is in Joules. It is displayed in Wh.
 
 Displays the numeric value passed after conversion into watts (the non-whole part of the converted value is truncated).
 
 Also displays a graph in the background which scrolls along from right to left, showing a history of the power values which have been displayed in the last minute or so. The graph's maximum value is set using the Set Maximum Power command, and stored in non-volatile EEPROM.  If the Power command is called with a value that exceeds the maximum value, the graph will simply be full height.
+
+Displays the Energy value converted from Ws (J) into Wh (by dividing by 3600). This is displayed in the top of the display.
+
+Multiple Power
+^^^^^^^^^^^^^^
+
+* Command ID: "MM"
+* Parameter: Four x Five-digit number each is a value in tenths of a Watt, e.g. "12345", meaning 1234.5 Watts. With ":" seperators and "#" end
+* Example: "aAAMM:12345:34567:78901:55555#"
+
+Displays the numeric value passed after conversion into watts (the non-whole part of the converted value is truncated).
+
+Also displays a graph in the background which scrolls along from right to left, showing a history of the power values which have been displayed in the last minute or so. The graph's maximum value is set using the Set Maximum Power command, and stored in non-volatile EEPROM.  If the Power command is called with a value that exceeds the maximum value, the graph will simply be full height.
+
 
 Set ID
 ^^^^^^

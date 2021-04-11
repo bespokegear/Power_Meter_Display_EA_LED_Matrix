@@ -16,6 +16,7 @@
 #include "SetMaxPowerMode.h"
 #include "SetIDMode.h"
 #include "DumpConfigMode.h"
+#include "MultiPowerMode.h"
 #include "Settings.h"
 
 RIDisplayCommandParser Parser;
@@ -84,11 +85,12 @@ void RIDisplayCommandParser::begin()
     _mapper.add("DC", DumpConfig,           0,  &DumpConfigMode);
     _mapper.add("ID", SetID,                2,  &SetIDMode);
     _mapper.add("MP", MaxGraphPower,        4,  &SetMaxPowerMode);
-    _mapper.add("P",  Power,                5,  &PowerMode);
+    _mapper.add("P",  Power,                20,  &PowerMode);
+    _mapper.add("MM", MultiPower,           32,  &MultiPowerMode);
     _mapper.add("ST", String,               RIDCP_BUFFER_LEN-6, &SmallTextMode);
     _mapper.add("TC", TextControl,          2,  &TextControlMode);
     _mapper.add("TE", Text,                 RIDCP_BUFFER_LEN-6, &TextMode);
-    _mapper.add("TI", Timer,                4,  &TimerMode);
+    _mapper.add("TI", Timer,                10,  &TimerMode);
     _mapper.add("V",  VoltageAndCurrent,    8,  &VoltageAndCurrentMode);
     _mapper.add("WN", Winner,               1,  &WinnerMode);
 
@@ -104,7 +106,6 @@ void RIDisplayCommandParser::update()
     }
 
     bool fire = false;
-
     if (Serial.available() > 0) {
         int c = Serial.read();
         if (c == '\n' || c == '\r') {
@@ -231,5 +232,3 @@ void RIDisplayCommandParser::dumpID()
     Serial.print((char)_id0);
     Serial.println((char)_id1);
 }
-
-
