@@ -1,3 +1,11 @@
+// Info:
+// This version is for the Griove LED matrix driver
+// https://wiki.seeedstudio.com/Grove-LED_Matrix_Driver_v1.0/
+// Their example code is here:
+// https://github.com/Seeed-Studio/Grove_LED_Matrix_Driver
+// For the EA PLT1001 driver use the other firmware!
+
+
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 #include <EEPROM.h>
