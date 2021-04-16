@@ -48,7 +48,7 @@ void PowerMode_::start(const char* data)
         }
         break;
       case 1:
-        if (s_substring.toInt() > 0)  // Max should be 9999Wh from the unit
+        if (s_substring.length() > 0)  // Check we have some data - if not then ignore... // Max should be 9999Wh from the unit
         {
           lastEValue = s_substring.toInt();
         }
@@ -112,8 +112,7 @@ void PowerMode_::drawValue()
   Matrix.setFont(6);
   // Write the whole part
   Matrix.rtext(MATRIX_GREEN, 50, 15, String(lastPValue / 10));
-
-  // Need to sort ouyt Ws to Wh?
+  // Show Wh value read from data
   Matrix.rtext(MATRIX_GREEN, 50 + 64, 15, String(lastEValue));
   // Write the fractional part (1 d.p.)
   Matrix.setFont(4);
