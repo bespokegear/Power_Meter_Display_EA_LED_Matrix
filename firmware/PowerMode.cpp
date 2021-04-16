@@ -48,12 +48,9 @@ void PowerMode_::start(const char* data)
         }
         break;
       case 1:
-        if (s_substring.length() >= 4)   // Substring is divided by 3600 to give value. So up to 3600 will read 0. Must have more than 2 digits to be valid.
+        if (s_substring.toInt() > 0)  // Max should be 9999Wh from the unit
         {
-          if (s_substring.toInt() > 0 && s_substring.toInt() < 35999640000)  // Not less than 0 or more than 35996400 (J to Wh = /3600...
-          {
-            lastEValue = s_substring.toInt();
-          }
+          lastEValue = s_substring.toInt();
         }
         break;
     }
@@ -117,7 +114,7 @@ void PowerMode_::drawValue()
   Matrix.rtext(MATRIX_GREEN, 50, 15, String(lastPValue / 10));
 
   // Need to sort ouyt Ws to Wh?
-  Matrix.rtext(MATRIX_GREEN, 50 + 64, 15, String(lastEValue / 3600));
+  Matrix.rtext(MATRIX_GREEN, 50 + 64, 15, String(lastEValue));
   // Write the fractional part (1 d.p.)
   Matrix.setFont(4);
   Matrix.text(MATRIX_GREEN, 50 + 3, 15, "W");
