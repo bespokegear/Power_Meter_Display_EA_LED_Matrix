@@ -50,7 +50,14 @@ void PowerMode_::start(const char* data)
       case 1:
         if (s_substring.length() > 0)  // Check we have some data - if not then ignore... // Max should be 9999Wh from the unit
         {
-          lastEValue = s_substring.toInt();
+          if (s_substring.toInt() == 0)
+          {
+            lastEValue = s_substring.toInt();
+          }
+          else if (s_substring.toInt() > lastEValue)
+          {
+            lastEValue = s_substring.toInt();
+          }
         }
         break;
     }
