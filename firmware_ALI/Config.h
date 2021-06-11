@@ -16,8 +16,8 @@
 // Button parameters
 #define RESET_BUTTON_PIN                2
 
-#define CMD_TIMEOUT_MS          10000
-#define CMD_BUF_LEN             32
+#define CMD_TIMEOUT_MS          5000
+#define CMD_BUF_LEN             5
 
 #define GRAPH_DATA_ITEMS        64
 #define GRAPH_DATA_ITEMS_SM     32
@@ -30,7 +30,7 @@
 #define LED_PANELS              2
 
 #define SERIAL_BAUD             115200
-#define DEBUG                   false
+#define DEBUG                   true
 
 
 //#define SERIAL_BAUD             9600

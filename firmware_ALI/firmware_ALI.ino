@@ -1,0 +1,58 @@
+// Info:
+// This version is for the Griove LED matrix driver
+// https://wiki.seeedstudio.com/Grove-LED_Matrix_Driver_v1.0/
+// Their example code is here:
+// https://github.com/Seeed-Studio/Grove_LED_Matrix_Driver
+// For the EA PLT1001 driver use the other firmware!
+
+
+#include <Arduino.h>
+#include <SoftwareSerial.h>
+#include "LEDMatrix.h"
+
+#include <EEPROM.h>
+#include <Heartbeat.h>
+#include <MutilaDebug.h>    // must use version 1.1.6
+#include <stdint.h>
+#include <DebouncedButton.h>
+
+#include "Config.h"
+#include "Matrix.h"
+#include "Parser.h"
+#include "Settings.h"
+#include "ClearMode.h"
+#include "PowerMode.h"
+
+SoftwareSerial matrix_serial(SW_SERIAL_RX, SW_SERIAL_TX);
+Heartbeat heartbeat(HEARTBEAT_PIN);
+
+// Sort out reset button
+DebouncedButton ResetButton(RESET_BUTTON_PIN, true);
+
+void setup() {
+  Serial.begin(SERIAL_BAUD);
+  heartbeat.begin();
+  // Parser should be initialize before Matrix so that when Matrix
+  // Enters DumpConfigMode, Parser wil already know it's ID
+  Parser.begin();
+  Matrix.begin();
+  // Initialize button objects
+  ResetButton.begin();
+  DBLN(F("setup:E"));
+}
+
+void loop () {
+  heartbeat.update();
+  Matrix.update();
+  Parser.update();
+    // Check Buttons
+  ResetButton.update();
+  if (ResetButton.pushed() == true)
+  {
+    //energyWs = 0;  // Reset the energy value
+    DBLN(F("Pressed"));
+    PowerMode.lastEValue = 0;
+    Matrix.startMode(&ClearMode);
+  }
+  delay(5);
+}
